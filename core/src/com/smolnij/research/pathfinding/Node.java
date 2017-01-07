@@ -20,7 +20,7 @@ public class Node implements TileCoordinatesAware {
     }
 
     List<Node> getNeighbors(final Node[][] map) {
-        final List<Node> neighbors = new ArrayList<Node>(8);
+        final List<Node> neighbors = new ArrayList<>(8);
         if (y - 1 >= 0) {
             if (x - 1 >= 0) {
                 if (!map[x - 1][y - 1].blocked) {

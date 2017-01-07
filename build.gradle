@@ -54,7 +54,7 @@ project(":html") {
         compile "com.badlogicgames.gdx:gdx-backend-gwt:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx:$gdxVersion:sources"
         compile "com.badlogicgames.gdx:gdx-backend-gwt:$gdxVersion:sources"
-        compile "com.badlogicgames.gdx:gdx-pathfinding:$aiVersion:sources"
+        compile "com.badlogicgames.gdx:gdx-ai:$aiVersion:sources"
     }
 }
 
@@ -63,8 +63,10 @@ project(":core") {
 
 
     dependencies {
+        testCompile "junit:junit:4.11"
         compile "com.badlogicgames.gdx:gdx:$gdxVersion"
-        compile "com.badlogicgames.gdx:gdx-pathfinding:$aiVersion"
+        compile "com.badlogicgames.gdx:gdx-ai:$aiVersion"
+        compile group: 'org.apache.commons', name: 'commons-collections4', version: '4.1'
     }
 }
 
