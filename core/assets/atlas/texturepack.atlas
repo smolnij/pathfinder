@@ -6,8 +6,15 @@ filter: Linear,Linear
 repeat: none
 draw-maze-btn
   rotate: false
-  xy: 2, 2
+  xy: 2, 20
   size: 255, 42
   orig: 255, 42
+  offset: 0, 0
+  index: -1
+wall
+  rotate: false
+  xy: 2, 2
+  size: 16, 16
+  orig: 16, 16
   offset: 0, 0
   index: -1

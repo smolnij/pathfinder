@@ -9,7 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 
-public enum SKIN_HOLDER {
+public enum SkinHolder {
     INSTANCE;
 
     private static final String FONT_PATH = "fonts/c059.fnt";

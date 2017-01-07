@@ -4,7 +4,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertTrue;
 
-public class WorkingTest {
+public class GreedyBestFirstSearchTest {
 
     @Test
     public void thisAlwaysPasses() {

@@ -9,8 +9,9 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthoCachedTiledMapRenderer;
-import com.smolnij.research.layout.ATLAS_HELPER;
+import com.smolnij.research.layout.AtlasHelper;
 import com.smolnij.research.scene.ControlPanel;
+import com.smolnij.research.state.GameState;
 
 public class PathFindingResearch extends ApplicationAdapter {
     private SpriteBatch batch;
@@ -35,18 +36,26 @@ public class PathFindingResearch extends ApplicationAdapter {
         map = new TmxMapLoader().load("grid.tmx");
         mapRenderer = new OrthoCachedTiledMapRenderer(map);
         mapRenderer.setView(mapCamera);
+
+        Gdx.input.setInputProcessor(controlPanel);
     }
 
     @Override
     public void render() {
         Gdx.gl.glClearColor(1, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        controlPanel.act();
 
         Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), 50);
-        controlPanel.stage.draw();
+        controlPanel.draw();
 
         Gdx.gl.glViewport(0, 50, Gdx.graphics.getWidth(), 480);
         mapRenderer.render();
+
+        if (GameState.INSTANCE.getCurrentState() == GameState.State.DRAW_MAZE) {
+            batch.draw(AtlasHelper.INSTANCE.getTexture("wall"), Gdx.input.getX(), Gdx.input.getY());
+            System.out.println("drwa");
+        }
     }
 
     @Override
@@ -54,6 +63,6 @@ public class PathFindingResearch extends ApplicationAdapter {
         batch.dispose();
         map.dispose();
         controlPanel.dispose();
-        ATLAS_HELPER.INSTANCE.disposeAtlas();
+        AtlasHelper.INSTANCE.disposeAtlas();
     }
 }
