@@ -9,8 +9,8 @@ public class DesktopLauncher {
 		PathFindingTexturePacker.packTextures();
 
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		config.width = 800;
-		config.height = 480;
+		config.width = PathFindingResearch.MAP_WIDTH;
+		config.height = PathFindingResearch.MAP_HEIGHT + PathFindingResearch.PANEL_HEIGHT;
 		new LwjglApplication(new PathFindingResearch(), config);
 	}
 }

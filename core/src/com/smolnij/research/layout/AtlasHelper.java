@@ -1,8 +1,8 @@
 package com.smolnij.research.layout;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 
 public enum AtlasHelper {
@@ -21,9 +21,11 @@ public enum AtlasHelper {
         return new SpriteDrawable(getTextureAtlas().createSprite(regionName));
     }
 
-    public Texture getTexture(final String textureName) {
-        return textureAtlas.createSprite(textureName).getTexture();
+    public TextureRegion findRegion(final String textureName) {
+        return getTextureAtlas().findRegion(textureName);
     }
+
+
 
     public void disposeAtlas() {
         if (textureAtlas != null) {
