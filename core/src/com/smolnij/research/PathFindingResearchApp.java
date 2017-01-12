@@ -1,6 +1,8 @@
 package com.smolnij.research;
 
-import com.badlogic.gdx.*;
+import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -12,13 +14,13 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthoCachedTiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.smolnij.research.layout.AtlasHelper;
 import com.smolnij.research.scene.ControlPanel;
+import com.smolnij.research.scene.MazeRenderer;
 import com.smolnij.research.state.GameState;
 
-public class PathFindingResearch extends ApplicationAdapter implements InputProcessor {
+public class PathFindingResearchApp extends ApplicationAdapter {
     public static final int VIRTUAL_WIDTH = 800;
     public static final int VIRTUAL_HEIGHT = 480;
     public static final int PANEL_HEIGHT = 100;
@@ -38,8 +40,7 @@ public class PathFindingResearch extends ApplicationAdapter implements InputProc
     private int mapTileHeight;
     private OrthographicCamera mapCamera;
 
-    private Vector3 touchPoint = new Vector3();
-    private boolean dragging;
+    private MazeRenderer mazeRenderer;
 
 
     @Override
@@ -60,7 +61,9 @@ public class PathFindingResearch extends ApplicationAdapter implements InputProc
 
         mapRenderer = setUpMapRenderer();
 
-        Gdx.input.setInputProcessor(new InputMultiplexer(controlPanel, this));
+        mazeRenderer = new MazeRenderer(batch, mapCamera, getMapWidth(map), getMapHeight(map));
+
+        Gdx.input.setInputProcessor(new InputMultiplexer(controlPanel, mazeRenderer));
 //        PathFinder pf = new IndexedAStarPathFinder(null);
     }
 
@@ -115,80 +118,12 @@ public class PathFindingResearch extends ApplicationAdapter implements InputProc
         HdpiUtils.glViewport(0, PANEL_HEIGHT, Gdx.graphics.getWidth(), VIRTUAL_HEIGHT);
         mapRenderer.render();
         if (GameState.INSTANCE.getCurrentState() == GameState.State.DRAW_MAZE) {
-            batch.setProjectionMatrix(mapCamera.combined);
-            batch.begin();
-            final Vector3 wallCursorCoords = new Vector3();
-            screenToMapXY(Gdx.input.getX(), Gdx.input.getY(), wallCursorCoords);
-            batch.draw(AtlasHelper.INSTANCE.findRegion("wall"), (float) (Math.floor(wallCursorCoords.x)),
-                    (float) (Math.floor(wallCursorCoords.y)), 1, 1);
-
-            addWallSegment(touchPoint);
-//            System.out.println("x: " + touchPoint.x + " y: " + touchPoint.y);
-            addCell((TiledMapTileLayer) map.getLayers().get("wallsAndAction"), (int) touchPoint.x, (int) touchPoint.y, "wall");
-            mapRenderer = setUpMapRenderer();
-            batch.end();
+            mazeRenderer.render();
         }
-
 
         controlPanel.getViewport().apply();
         controlPanel.act();
         controlPanel.draw();
-    }
-
-    private void addWallSegment(final Vector3 touchPoint) {
-
-    }
-
-    @Override
-    public boolean keyDown(int keycode) {
-        return false;
-    }
-
-    @Override
-    public boolean keyUp(int keycode) {
-        return false;
-    }
-
-    @Override
-    public boolean keyTyped(char character) {
-        return false;
-    }
-
-    @Override
-    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        if (button != Input.Buttons.LEFT || pointer > 0) return false;
-        screenToMapXY(screenX, screenY, touchPoint);
-        dragging = true;
-        return true;
-    }
-
-    @Override
-    public boolean touchDragged(int screenX, int screenY, int pointer) {
-        if (!dragging) return false;
-        screenToMapXY(screenX, screenY, touchPoint);
-        return true;
-    }
-
-    @Override
-    public boolean mouseMoved(int screenX, int screenY) {
-        return false;
-    }
-
-    @Override
-    public boolean scrolled(int amount) {
-        return false;
-    }
-
-    @Override
-    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        if (button != Input.Buttons.LEFT || pointer > 0) return false;
-        screenToMapXY(screenX, screenY, touchPoint);
-        dragging = false;
-        return true;
-    }
-
-    private void screenToMapXY(final int screenX, final int screenY, final Vector3 vector) {
-        mapCamera.unproject(vector.set(screenX, screenY, 0), 0, PANEL_HEIGHT, Gdx.graphics.getWidth(), VIRTUAL_HEIGHT);
     }
 
     @Override
