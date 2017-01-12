@@ -17,13 +17,19 @@ public class MazeRenderer implements InputProcessor {
     private final OrthographicCamera camera;
     private final Vector3 touchPoint = new Vector3(-1, -1, -1);
     private final Vector3 wallCursorCoords = new Vector3();
+    private final TiledMapPoint startPoint;
+    private final TiledMapPoint targetPoint;
     private final boolean[][] wallSegments;
     private boolean dragging;
 
-    public MazeRenderer(final SpriteBatch batch, final OrthographicCamera camera, final int mazeWidth, final int mazeHeight) {
+    public MazeRenderer(final SpriteBatch batch, final OrthographicCamera camera,
+                        final int mazeWidth, final int mazeHeight, final TiledMapPoint startPoint,
+                        final TiledMapPoint targetPoint) {
         this.batch = batch;
         this.camera = camera;
-        wallSegments = new boolean[mazeWidth][mazeHeight];
+        this.wallSegments = new boolean[mazeWidth][mazeHeight];
+        this.startPoint = startPoint;
+        this.targetPoint = targetPoint;
     }
 
     public void render() {
@@ -48,11 +54,13 @@ public class MazeRenderer implements InputProcessor {
         final int x = (int) touchPoint.x;
         final int y = (int) touchPoint.y;
 
-        if (x < 0 || x > wallSegments.length || y < 0 || y > wallSegments[0].length) {
+        if (x < 0 || x > wallSegments.length - 1 || y < 0 || y > wallSegments[0].length - 1) {
             return;
         }
 
         wallSegments[x][y] = true;
+        wallSegments[startPoint.x][startPoint.y] = false;
+        wallSegments[targetPoint.x][targetPoint.y] = false;
     }
 
 

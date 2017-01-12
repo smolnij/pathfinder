@@ -18,6 +18,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.smolnij.research.layout.AtlasHelper;
 import com.smolnij.research.scene.ControlPanel;
 import com.smolnij.research.scene.MazeRenderer;
+import com.smolnij.research.scene.TiledMapPoint;
 import com.smolnij.research.state.GameState;
 
 public class PathFindingResearchApp extends ApplicationAdapter {
@@ -34,12 +35,7 @@ public class PathFindingResearchApp extends ApplicationAdapter {
     private TiledMapRenderer mapRenderer;
     private TiledMap map;
     private ControlPanel controlPanel;
-
-
-    private int mapTileWidth;
-    private int mapTileHeight;
     private OrthographicCamera mapCamera;
-
     private MazeRenderer mazeRenderer;
 
 
@@ -53,21 +49,22 @@ public class PathFindingResearchApp extends ApplicationAdapter {
 
         map = new TmxMapLoader().load("grid.tmx");
 
-        final MapProperties mapProperties = map.getProperties();
-        mapTileWidth = mapProperties.get("tilewidth", Integer.class);
-        mapTileHeight = mapProperties.get("tileheight", Integer.class);
-
         prepareMap(map);
 
         mapRenderer = setUpMapRenderer();
 
-        mazeRenderer = new MazeRenderer(batch, mapCamera, getMapWidth(map), getMapHeight(map));
+        mazeRenderer = new MazeRenderer(batch, mapCamera, getMapWidth(map), getMapHeight(map),
+                new TiledMapPoint(START_X, START_Y), new TiledMapPoint(TARGET_X, TARGET_Y));
 
         Gdx.input.setInputProcessor(new InputMultiplexer(controlPanel, mazeRenderer));
 //        PathFinder pf = new IndexedAStarPathFinder(null);
     }
 
     private void prepareMap(final TiledMap tiledMap) {
+        final MapProperties mapProperties = map.getProperties();
+        final int mapTileWidth = mapProperties.get("tilewidth", Integer.class);
+        final int mapTileHeight = mapProperties.get("tileheight", Integer.class);
+
         final TiledMapTileLayer wallsAndActionLayer = new TiledMapTileLayer(getMapWidth(tiledMap), getMapHeight(tiledMap), mapTileWidth, mapTileHeight);
         wallsAndActionLayer.setName("wallsAndAction");
 
@@ -77,12 +74,12 @@ public class PathFindingResearchApp extends ApplicationAdapter {
         tiledMap.getLayers().add(wallsAndActionLayer);
     }
 
-    private Integer getMapHeight(TiledMap tiledMap) {
+    private Integer getMapHeight(final TiledMap tiledMap) {
         final MapProperties mapProperties = tiledMap.getProperties();
         return mapProperties.get("height", Integer.class);
     }
 
-    private Integer getMapWidth(TiledMap tiledMap) {
+    private Integer getMapWidth(final TiledMap tiledMap) {
         final MapProperties mapProperties = tiledMap.getProperties();
         return mapProperties.get("width", Integer.class);
     }
