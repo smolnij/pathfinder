@@ -3,6 +3,10 @@ package com.smolnij.research;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.ai.pfa.DefaultGraphPath;
+import com.badlogic.gdx.ai.pfa.GraphPath;
+import com.badlogic.gdx.ai.pfa.Heuristic;
+import com.badlogic.gdx.ai.pfa.indexed.IndexedAStarPathFinder;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -16,6 +20,9 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthoCachedTiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.smolnij.research.layout.AtlasHelper;
+import com.smolnij.research.pathfinding.Node;
+import com.smolnij.research.pathfinding.datastructure.IndexedNodeGraph;
+import com.smolnij.research.pathfinding.heuristic.ManhattanDistance;
 import com.smolnij.research.scene.ControlPanel;
 import com.smolnij.research.scene.MazeRenderer;
 import com.smolnij.research.scene.TiledMapPoint;
@@ -32,7 +39,7 @@ public class PathFindingResearchApp extends ApplicationAdapter {
     private static final int TARGET_Y = 15;
 
     private SpriteBatch batch;
-    private TiledMapRenderer mapRenderer;
+    private TiledMapRenderer tiledMapRenderer;
     private TiledMap map;
     private ControlPanel controlPanel;
     private OrthographicCamera mapCamera;
@@ -51,13 +58,35 @@ public class PathFindingResearchApp extends ApplicationAdapter {
 
         prepareMap(map);
 
-        mapRenderer = setUpMapRenderer();
+        tiledMapRenderer = setUpMapRenderer(map);
 
-        mazeRenderer = new MazeRenderer(batch, mapCamera, getMapWidth(map), getMapHeight(map),
-                new TiledMapPoint(START_X, START_Y), new TiledMapPoint(TARGET_X, TARGET_Y));
+        final Node[][] maze = initMaze();
+
+
+        mazeRenderer = new MazeRenderer(batch, mapCamera,
+                new TiledMapPoint(START_X, START_Y), new TiledMapPoint(TARGET_X, TARGET_Y), maze);
 
         Gdx.input.setInputProcessor(new InputMultiplexer(controlPanel, mazeRenderer));
-//        PathFinder pf = new IndexedAStarPathFinder(null);
+
+    }
+
+    private Node[][] initMaze() {
+        final Node[][] maze = new Node[getMapWidth(map)][getMapHeight(map)];
+        for (int x = 0; x < maze.length; x++) {
+            for (int y = 0; y < maze[0].length; y++) {
+                maze[x][y] = new Node(x, y, false);
+            }
+        }
+        return maze;
+    }
+
+    private void searchPath(final Node[][] maze) {
+        IndexedAStarPathFinder<Node> pf = new IndexedAStarPathFinder<>(new IndexedNodeGraph(maze));
+
+        final GraphPath<Node> objects = new DefaultGraphPath<>();
+        final Heuristic<Node> heuristic = new ManhattanDistance<>();
+
+        pf.searchNodePath(new Node(0, 0, false), new Node(0, 0, false), heuristic, objects);
     }
 
     private void prepareMap(final TiledMap tiledMap) {
@@ -98,7 +127,7 @@ public class PathFindingResearchApp extends ApplicationAdapter {
         wallsAndActionLayer.setCell(x, y, cell);
     }
 
-    private TiledMapRenderer setUpMapRenderer() {
+    private TiledMapRenderer setUpMapRenderer(final TiledMap map) {
         mapCamera = new OrthographicCamera();
         mapCamera.setToOrtho(true, getMapWidth(map), getMapHeight(map));
         mapCamera.update();
@@ -113,7 +142,7 @@ public class PathFindingResearchApp extends ApplicationAdapter {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         HdpiUtils.glViewport(0, PANEL_HEIGHT, Gdx.graphics.getWidth(), VIRTUAL_HEIGHT);
-        mapRenderer.render();
+        tiledMapRenderer.render();
         if (GameState.INSTANCE.getCurrentState() == GameState.State.DRAW_MAZE) {
             mazeRenderer.render();
         }

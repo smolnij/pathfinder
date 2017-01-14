@@ -3,7 +3,6 @@ package com.smolnij.research.pathfinding;
 
 import com.smolnij.research.pathfinding.heuristic.HeuristicNodeComparator;
 
-
 import java.util.*;
 
 public class GreedyBestFirstSearch {
@@ -11,7 +10,7 @@ public class GreedyBestFirstSearch {
     public static List<Node> greedyBestFirstSearch(final Node start, final Node goal, final Node[][] map) {
         final Collection<Node> closed = new ArrayList<>();
 //        final PriorityBuffer open = new PriorityBuffer(new HeuristicNodeComparator(goal));
-        final PriorityQueue<Node> open = new PriorityQueue<>(new HeuristicNodeComparator(goal));
+        final PriorityQueue<Node> open = new PriorityQueue<>(new HeuristicNodeComparator<>(goal));
 
         //FIXME open.add(new Node()) used here instead of open.add(start), but! but! maybe we can use coords here instead of Node
         //moreover pathfinder getNeighbors and setPathParent has to do ONLY

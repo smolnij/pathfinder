@@ -9,6 +9,7 @@ public enum AtlasHelper {
     INSTANCE;
 
     private TextureAtlas textureAtlas;
+    private TextureRegion wallTexture;
 
     public TextureAtlas getTextureAtlas() {
         if (textureAtlas == null) {
@@ -25,7 +26,12 @@ public enum AtlasHelper {
         return getTextureAtlas().findRegion(textureName);
     }
 
-
+    public TextureRegion getWallTexture() {
+        if (wallTexture == null) {
+            wallTexture = textureAtlas.findRegion("wall");
+        }
+        return wallTexture;
+    }
 
     public void disposeAtlas() {
         if (textureAtlas != null) {

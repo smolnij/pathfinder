@@ -8,7 +8,7 @@ public class Node implements TileCoordinatesAware {
 
     private final int x;
     private final int y;
-    private final boolean blocked;
+    private boolean blocked;
 
 
     private Node pathParent;
@@ -19,7 +19,7 @@ public class Node implements TileCoordinatesAware {
         this.blocked = blocked;
     }
 
-    List<Node> getNeighbors(final Node[][] map) {
+    public List<Node> getNeighbors(final Node[][] map) {
         final List<Node> neighbors = new ArrayList<>(8);
         if (y - 1 >= 0) {
             if (x - 1 >= 0) {
@@ -101,8 +101,15 @@ public class Node implements TileCoordinatesAware {
         return y;
     }
 
-    boolean isBlocked() {
+    public boolean isBlocked() {
         return blocked;
     }
 
+    public void block() {
+        this.blocked = true;
+    }
+
+    public void unblock() {
+        this.blocked = false;
+    }
 }
