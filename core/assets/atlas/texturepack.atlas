@@ -1,54 +1,82 @@
 
 texturepack.png
-size: 1024,64
+size: 512,128
 format: RGBA4444
 filter: Linear,Linear
 repeat: none
+draw-wall-cursor
+  rotate: false
+  xy: 417, 110
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
 draw-walls-btn
   rotate: false
-  xy: 2, 20
+  xy: 2, 86
   size: 254, 40
   orig: 254, 40
   offset: 0, 0
   index: -1
 draw-walls-btn-down
   rotate: false
-  xy: 258, 20
+  xy: 2, 44
   size: 254, 40
   orig: 254, 40
   offset: 0, 0
   index: -1
+remove-wall-cursor
+  rotate: false
+  xy: 368, 26
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+remove-walls-btn
+  rotate: false
+  xy: 2, 2
+  size: 181, 40
+  orig: 181, 40
+  offset: 0, 0
+  index: -1
+remove-walls-btn-down
+  rotate: false
+  xy: 185, 2
+  size: 181, 40
+  orig: 181, 40
+  offset: 0, 0
+  index: -1
 search-path-btn
   rotate: false
-  xy: 514, 20
+  xy: 258, 86
   size: 157, 40
   orig: 157, 40
   offset: 0, 0
   index: -1
 search-path-btn-down
   rotate: false
-  xy: 673, 20
+  xy: 258, 44
   size: 157, 40
   orig: 157, 40
   offset: 0, 0
   index: -1
 start
   rotate: false
-  xy: 2, 2
+  xy: 417, 92
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 target
   rotate: false
-  xy: 832, 44
+  xy: 435, 110
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 wall
   rotate: false
-  xy: 20, 2
+  xy: 368, 8
   size: 16, 16
   orig: 16, 16
   offset: 0, 0

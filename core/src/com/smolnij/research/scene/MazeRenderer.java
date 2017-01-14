@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector3;
 import com.smolnij.research.layout.AtlasHelper;
 import com.smolnij.research.pathfinding.Node;
@@ -22,6 +23,8 @@ public class MazeRenderer implements InputProcessor {
     private final TiledMapPoint targetPoint;
     private final Node[][] maze;
     private boolean dragging;
+    private TextureRegion cursor;
+    private boolean blockCell;
 
     public MazeRenderer(final SpriteBatch batch, final OrthographicCamera camera,
                         final TiledMapPoint startPoint,
@@ -31,16 +34,32 @@ public class MazeRenderer implements InputProcessor {
         this.startPoint = startPoint;
         this.targetPoint = targetPoint;
         this.maze = maze;
+        toDrawWallsState();
+    }
+
+    public void toDrawWallsState() {
+        cursor = AtlasHelper.INSTANCE.findRegion("draw-wall-cursor");
+        blockCell = true;
+    }
+
+    public void toRemoveWallsState() {
+        cursor = AtlasHelper.INSTANCE.findRegion("remove-wall-cursor");
+        blockCell = false;
     }
 
     public void render() {
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
+        drawMaze();
 
         screenToMapXY(Gdx.input.getX(), Gdx.input.getY(), wallCursorCoords);
-        batch.draw(AtlasHelper.INSTANCE.getWallTexture(), (float) (Math.floor(wallCursorCoords.x)),
+        batch.draw(cursor, (float) (Math.floor(wallCursorCoords.x)),
                 (float) (Math.floor(wallCursorCoords.y)), 1, 1);
 
+        batch.end();
+    }
+
+    private void drawMaze() {
         for (int i = 0; i < maze.length; i++) {
             for (int j = 0; j < maze[0].length; j++) {
                 if (maze[i][j].isBlocked()) {
@@ -48,10 +67,9 @@ public class MazeRenderer implements InputProcessor {
                 }
             }
         }
-        batch.end();
     }
 
-    private void addWallSegment(final Vector3 touchPoint) {
+    private void editWallSegment(final Vector3 touchPoint) {
         final int x = (int) touchPoint.x;
         final int y = (int) touchPoint.y;
 
@@ -59,7 +77,7 @@ public class MazeRenderer implements InputProcessor {
             return;
         }
 
-        maze[x][y].block();
+        maze[x][y].setBlocked(blockCell);
         maze[startPoint.x][startPoint.y].unblock();
         maze[targetPoint.x][targetPoint.y].unblock();
     }
@@ -83,7 +101,7 @@ public class MazeRenderer implements InputProcessor {
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         if (button != Input.Buttons.LEFT || pointer > 0) return false;
         screenToMapXY(screenX, screenY, touchPoint);
-        addWallSegment(touchPoint);
+        editWallSegment(touchPoint);
         dragging = true;
         return true;
     }
@@ -92,7 +110,7 @@ public class MazeRenderer implements InputProcessor {
     public boolean touchDragged(int screenX, int screenY, int pointer) {
         if (!dragging) return false;
         screenToMapXY(screenX, screenY, touchPoint);
-        addWallSegment(touchPoint);
+        editWallSegment(touchPoint);
         return true;
     }
 

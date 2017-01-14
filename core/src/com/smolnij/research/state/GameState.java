@@ -13,7 +13,15 @@ public enum GameState {
         currentState = state;
     }
 
+    public boolean isCurrentStateDrawWalls() {
+        return currentState == State.DRAW_WALLS;
+    }
+
+    public boolean isCurrentStateRemoveWalls() {
+        return currentState == State.REMOVE_WALLS;
+    }
+
     public enum State {
-        WAIT_FOR_INPUT, DRAW_MAZE
+        WAIT_FOR_INPUT, DRAW_WALLS, REMOVE_WALLS
     }
 }

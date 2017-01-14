@@ -26,7 +26,6 @@ import com.smolnij.research.pathfinding.heuristic.ManhattanDistance;
 import com.smolnij.research.scene.ControlPanel;
 import com.smolnij.research.scene.MazeRenderer;
 import com.smolnij.research.scene.TiledMapPoint;
-import com.smolnij.research.state.GameState;
 
 public class PathFindingResearchApp extends ApplicationAdapter {
     public static final int VIRTUAL_WIDTH = 800;
@@ -49,9 +48,8 @@ public class PathFindingResearchApp extends ApplicationAdapter {
     @Override
     public void create() {
         batch = new SpriteBatch();
-        batch.disableBlending();
 
-        controlPanel = new ControlPanel(new FitViewport(Gdx.graphics.getWidth(), VIRTUAL_HEIGHT, new OrthographicCamera()), batch);
+
 
 
         map = new TmxMapLoader().load("grid.tmx");
@@ -65,6 +63,9 @@ public class PathFindingResearchApp extends ApplicationAdapter {
 
         mazeRenderer = new MazeRenderer(batch, mapCamera,
                 new TiledMapPoint(START_X, START_Y), new TiledMapPoint(TARGET_X, TARGET_Y), maze);
+
+        controlPanel = new ControlPanel(new FitViewport(Gdx.graphics.getWidth(),
+                VIRTUAL_HEIGHT, new OrthographicCamera()), batch, mazeRenderer);
 
         Gdx.input.setInputProcessor(new InputMultiplexer(controlPanel, mazeRenderer));
 
@@ -143,13 +144,13 @@ public class PathFindingResearchApp extends ApplicationAdapter {
 
         HdpiUtils.glViewport(0, PANEL_HEIGHT, Gdx.graphics.getWidth(), VIRTUAL_HEIGHT);
         tiledMapRenderer.render();
-        if (GameState.INSTANCE.getCurrentState() == GameState.State.DRAW_MAZE) {
-            mazeRenderer.render();
-        }
 
+        batch.enableBlending();
+        mazeRenderer.render();
         controlPanel.getViewport().apply();
         controlPanel.act();
         controlPanel.draw();
+        batch.disableBlending();
     }
 
     @Override

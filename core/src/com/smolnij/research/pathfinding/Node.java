@@ -109,6 +109,10 @@ public class Node implements TileCoordinatesAware {
         this.blocked = true;
     }
 
+    public void setBlocked(boolean blocked) {
+        this.blocked = blocked;
+    }
+
     public void unblock() {
         this.blocked = false;
     }
