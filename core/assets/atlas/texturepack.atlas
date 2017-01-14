@@ -6,7 +6,7 @@ filter: Linear,Linear
 repeat: none
 draw-wall-cursor
   rotate: false
-  xy: 417, 110
+  xy: 392, 110
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
@@ -25,58 +25,58 @@ draw-walls-btn-down
   orig: 254, 40
   offset: 0, 0
   index: -1
+find-path-btn
+  rotate: false
+  xy: 258, 86
+  size: 132, 40
+  orig: 132, 40
+  offset: 0, 0
+  index: -1
+find-path-btn-down
+  rotate: false
+  xy: 258, 44
+  size: 132, 40
+  orig: 132, 40
+  offset: 0, 0
+  index: -1
+remove-wall-btn
+  rotate: false
+  xy: 2, 2
+  size: 171, 40
+  orig: 171, 40
+  offset: 0, 0
+  index: -1
+remove-wall-btn-down
+  rotate: false
+  xy: 175, 2
+  size: 171, 40
+  orig: 171, 40
+  offset: 0, 0
+  index: -1
 remove-wall-cursor
   rotate: false
-  xy: 368, 26
+  xy: 348, 26
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-remove-walls-btn
-  rotate: false
-  xy: 2, 2
-  size: 181, 40
-  orig: 181, 40
-  offset: 0, 0
-  index: -1
-remove-walls-btn-down
-  rotate: false
-  xy: 185, 2
-  size: 181, 40
-  orig: 181, 40
-  offset: 0, 0
-  index: -1
-search-path-btn
-  rotate: false
-  xy: 258, 86
-  size: 157, 40
-  orig: 157, 40
-  offset: 0, 0
-  index: -1
-search-path-btn-down
-  rotate: false
-  xy: 258, 44
-  size: 157, 40
-  orig: 157, 40
-  offset: 0, 0
-  index: -1
 start
   rotate: false
-  xy: 417, 92
+  xy: 392, 92
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 target
   rotate: false
-  xy: 435, 110
+  xy: 410, 110
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 wall
   rotate: false
-  xy: 368, 8
+  xy: 348, 8
   size: 16, 16
   orig: 16, 16
   offset: 0, 0

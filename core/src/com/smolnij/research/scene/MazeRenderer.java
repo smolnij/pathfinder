@@ -34,7 +34,15 @@ public class MazeRenderer implements InputProcessor {
         this.startPoint = startPoint;
         this.targetPoint = targetPoint;
         this.maze = maze;
-        toDrawWallsState();
+        toWaitingState();
+    }
+
+    public void toWaitingState() {
+        cursor = null;
+    }
+
+    private boolean isWaitingState() {
+        return cursor == null;
     }
 
     public void toDrawWallsState() {
@@ -53,8 +61,10 @@ public class MazeRenderer implements InputProcessor {
         drawMaze();
 
         screenToMapXY(Gdx.input.getX(), Gdx.input.getY(), wallCursorCoords);
-        batch.draw(cursor, (float) (Math.floor(wallCursorCoords.x)),
-                (float) (Math.floor(wallCursorCoords.y)), 1, 1);
+        if (!isWaitingState()) {
+            batch.draw(cursor, (float) (Math.floor(wallCursorCoords.x)), (float) (Math.floor(wallCursorCoords.y)), 1, 1);
+        }
+
 
         batch.end();
     }
