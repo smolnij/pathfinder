@@ -1,14 +1,35 @@
 
 texturepack.png
-size: 512,64
+size: 1024,64
 format: RGBA4444
 filter: Linear,Linear
 repeat: none
-draw-maze-btn
+draw-walls-btn
   rotate: false
   xy: 2, 20
-  size: 255, 42
-  orig: 255, 42
+  size: 254, 40
+  orig: 254, 40
+  offset: 0, 0
+  index: -1
+draw-walls-btn-down
+  rotate: false
+  xy: 258, 20
+  size: 254, 40
+  orig: 254, 40
+  offset: 0, 0
+  index: -1
+search-path-btn
+  rotate: false
+  xy: 514, 20
+  size: 157, 40
+  orig: 157, 40
+  offset: 0, 0
+  index: -1
+search-path-btn-down
+  rotate: false
+  xy: 673, 20
+  size: 157, 40
+  orig: 157, 40
   offset: 0, 0
   index: -1
 start
@@ -20,14 +41,14 @@ start
   index: -1
 target
   rotate: false
-  xy: 20, 2
+  xy: 832, 44
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 wall
   rotate: false
-  xy: 38, 2
+  xy: 20, 2
   size: 16, 16
   orig: 16, 16
   offset: 0, 0

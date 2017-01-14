@@ -81,12 +81,12 @@ public class PathFindingResearchApp extends ApplicationAdapter {
     }
 
     private void searchPath(final Node[][] maze) {
-        IndexedAStarPathFinder<Node> pf = new IndexedAStarPathFinder<>(new IndexedNodeGraph(maze));
+        final IndexedAStarPathFinder<Node> pf = new IndexedAStarPathFinder<>(new IndexedNodeGraph(maze));
 
-        final GraphPath<Node> objects = new DefaultGraphPath<>();
+        final GraphPath<Node> path = new DefaultGraphPath<>();
         final Heuristic<Node> heuristic = new ManhattanDistance<>();
 
-        pf.searchNodePath(new Node(0, 0, false), new Node(0, 0, false), heuristic, objects);
+        pf.searchNodePath(new Node(0, 0, false), new Node(0, 0, false), heuristic, path);
     }
 
     private void prepareMap(final TiledMap tiledMap) {
