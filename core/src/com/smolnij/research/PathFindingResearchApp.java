@@ -3,10 +3,6 @@ package com.smolnij.research;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
-import com.badlogic.gdx.ai.pfa.DefaultGraphPath;
-import com.badlogic.gdx.ai.pfa.GraphPath;
-import com.badlogic.gdx.ai.pfa.Heuristic;
-import com.badlogic.gdx.ai.pfa.indexed.IndexedAStarPathFinder;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -21,16 +17,15 @@ import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.smolnij.research.layout.AtlasHelper;
 import com.smolnij.research.pathfinding.Node;
-import com.smolnij.research.pathfinding.datastructure.IndexedNodeGraph;
-import com.smolnij.research.pathfinding.heuristic.ManhattanDistance;
 import com.smolnij.research.scene.ControlPanel;
 import com.smolnij.research.scene.MazeRenderer;
+import com.smolnij.research.scene.PathFinder;
 import com.smolnij.research.scene.TiledMapPoint;
 
 public class PathFindingResearchApp extends ApplicationAdapter {
     public static final int VIRTUAL_WIDTH = 800;
     public static final int VIRTUAL_HEIGHT = 480;
-    public static final int PANEL_HEIGHT = 100;
+    public static final int PANEL_HEIGHT = 130;
 
     private static final int START_X = 10;
     private static final int START_Y = 15;
@@ -43,13 +38,12 @@ public class PathFindingResearchApp extends ApplicationAdapter {
     private ControlPanel controlPanel;
     private OrthographicCamera mapCamera;
     private MazeRenderer mazeRenderer;
+    private PathFinder pathFinder;
 
 
     @Override
     public void create() {
         batch = new SpriteBatch();
-
-
 
 
         map = new TmxMapLoader().load("grid.tmx");
@@ -64,7 +58,10 @@ public class PathFindingResearchApp extends ApplicationAdapter {
         mazeRenderer = new MazeRenderer(batch, mapCamera,
                 new TiledMapPoint(START_X, START_Y), new TiledMapPoint(TARGET_X, TARGET_Y), maze);
 
-        controlPanel = new ControlPanel(new FitViewport(Gdx.graphics.getWidth(), VIRTUAL_HEIGHT), batch, mazeRenderer);
+        pathFinder = new PathFinder(maze, new TiledMapPoint(START_X, START_Y), new TiledMapPoint(TARGET_X, TARGET_Y));
+
+        controlPanel = new ControlPanel(new FitViewport(Gdx.graphics.getWidth(), VIRTUAL_HEIGHT + PANEL_HEIGHT), batch,
+                mazeRenderer, pathFinder);
 
         Gdx.input.setInputProcessor(new InputMultiplexer(controlPanel, mazeRenderer));
 
@@ -78,15 +75,6 @@ public class PathFindingResearchApp extends ApplicationAdapter {
             }
         }
         return maze;
-    }
-
-    private void searchPath(final Node[][] maze) {
-        final IndexedAStarPathFinder<Node> pf = new IndexedAStarPathFinder<>(new IndexedNodeGraph(maze));
-
-        final GraphPath<Node> path = new DefaultGraphPath<>();
-        final Heuristic<Node> heuristic = new ManhattanDistance<>();
-
-        pf.searchNodePath(new Node(0, 0, false), new Node(0, 0, false), heuristic, path);
     }
 
     private void prepareMap(final TiledMap tiledMap) {
@@ -144,8 +132,10 @@ public class PathFindingResearchApp extends ApplicationAdapter {
         HdpiUtils.glViewport(0, PANEL_HEIGHT, Gdx.graphics.getWidth(), VIRTUAL_HEIGHT);
         tiledMapRenderer.render();
 
+
         batch.enableBlending();
         mazeRenderer.render();
+        pathFinder.render(batch);
         controlPanel.getViewport().apply();
         controlPanel.act();
         controlPanel.draw();

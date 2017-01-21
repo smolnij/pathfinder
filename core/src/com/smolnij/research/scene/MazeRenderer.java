@@ -79,17 +79,35 @@ public class MazeRenderer implements InputProcessor {
         }
     }
 
+    public void clearWalls() {
+        for (int i = 0; i < maze.length; i++) {
+            for (int j = 0; j < maze[0].length; j++) {
+                maze[i][j] = new Node(i, j, false);
+            }
+        }
+    }
+
     private void editWallSegment(final Vector3 touchPoint) {
         final int x = (int) touchPoint.x;
         final int y = (int) touchPoint.y;
+        if (isStartPoint(x, y) || isTargetPoint(x, y)) {
+            return;
+        }
 
         if (x < 0 || x > maze.length - 1 || y < 0 || y > maze[0].length - 1) {
             return;
         }
 
-        maze[x][y].setBlocked(blockCell);
-        maze[startPoint.x][startPoint.y].unblock();
-        maze[targetPoint.x][targetPoint.y].unblock();
+        maze[x][y] = new Node(x, y, blockCell);
+
+    }
+
+    private boolean isTargetPoint(int x, int y) {
+        return x == targetPoint.x && y == targetPoint.y;
+    }
+
+    private boolean isStartPoint(int x, int y) {
+        return x == startPoint.x && y == startPoint.y;
     }
 
     @Override

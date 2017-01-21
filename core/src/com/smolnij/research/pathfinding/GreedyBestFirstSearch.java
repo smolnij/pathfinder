@@ -7,8 +7,10 @@ import java.util.*;
 
 public class GreedyBestFirstSearch {
 
-    public static List<Node> greedyBestFirstSearch(final Node start, final Node goal, final Node[][] map) {
-        final Collection<Node> closed = new ArrayList<>();
+    private Collection<Node> closed = new ArrayList<>();
+
+    public List<Node> greedyBestFirstSearch(final Node start, final Node goal, final Node[][] map) {
+        closed = new ArrayList<>();
 //        final PriorityBuffer open = new PriorityBuffer(new HeuristicNodeComparator(goal));
         final PriorityQueue<Node> open = new PriorityQueue<>(new HeuristicNodeComparator<>(goal));
 
@@ -33,13 +35,17 @@ public class GreedyBestFirstSearch {
         return Collections.emptyList();
     }
 
-    private static List<Node> constructPath(final Node node) {
+    private static List<Node> constructPath(Node node) {
         final List<Node> path = new ArrayList<>();
         while (node.getPathParent() != null) {
             path.add(node);
-//            node = node.getPathParent();
+            node = node.getPathParent();
         }
         return path;
+    }
+
+    public Collection<Node> getClosed() {
+        return closed;
     }
 }
 

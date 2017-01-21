@@ -1,12 +1,54 @@
 
 texturepack.png
-size: 512,128
+size: 1024,128
 format: RGBA4444
 filter: Linear,Linear
 repeat: none
+clear-all-btn
+  rotate: false
+  xy: 566, 86
+  size: 123, 40
+  orig: 123, 40
+  offset: 0, 0
+  index: -1
+clear-all-btn-down
+  rotate: false
+  xy: 546, 44
+  size: 123, 40
+  orig: 123, 40
+  offset: 0, 0
+  index: -1
+clear-paths-btn
+  rotate: false
+  xy: 258, 86
+  size: 152, 40
+  orig: 152, 40
+  offset: 0, 0
+  index: -1
+clear-paths-btn-down
+  rotate: false
+  xy: 258, 44
+  size: 152, 40
+  orig: 152, 40
+  offset: 0, 0
+  index: -1
+clear-walls-btn
+  rotate: false
+  xy: 348, 2
+  size: 152, 40
+  orig: 152, 40
+  offset: 0, 0
+  index: -1
+clear-walls-btn-down
+  rotate: false
+  xy: 412, 86
+  size: 152, 40
+  orig: 152, 40
+  offset: 0, 0
+  index: -1
 draw-wall-cursor
   rotate: false
-  xy: 392, 110
+  xy: 691, 110
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
@@ -27,14 +69,14 @@ draw-walls-btn-down
   index: -1
 find-path-btn
   rotate: false
-  xy: 258, 86
+  xy: 412, 44
   size: 132, 40
   orig: 132, 40
   offset: 0, 0
   index: -1
 find-path-btn-down
   rotate: false
-  xy: 258, 44
+  xy: 502, 2
   size: 132, 40
   orig: 132, 40
   offset: 0, 0
@@ -55,28 +97,35 @@ remove-wall-btn-down
   index: -1
 remove-wall-cursor
   rotate: false
-  xy: 348, 26
+  xy: 636, 26
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 start
   rotate: false
-  xy: 392, 92
+  xy: 671, 68
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+step0
+  rotate: false
+  xy: 691, 92
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 target
   rotate: false
-  xy: 410, 110
+  xy: 709, 110
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 wall
   rotate: false
-  xy: 348, 8
+  xy: 636, 8
   size: 16, 16
   orig: 16, 16
   offset: 0, 0

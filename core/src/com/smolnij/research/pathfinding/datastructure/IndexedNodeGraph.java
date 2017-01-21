@@ -20,24 +20,30 @@ public class IndexedNodeGraph implements IndexedGraph<Node> {
 
     @Override
     public int getIndex(final Node node) {
-        return node.getX() * map.length + node.getY();
+//        final int i = node.getX() * map.length + node.getY();
+        final int i = node.getY() * map.length + node.getX();
+
+        System.out.println("node index: " + i);
+        return i;
     }
 
     @Override
     public int getNodeCount() {
-        return map.length * map[0].length;
+        final int i = map.length * map[0].length;
+        System.out.println("Node count: " + i);
+        return i;
     }
 
     @Override
     public Array<Connection<Node>> getConnections(final Node fromNode) {
-       final Array<Connection<Node>> array = new Array<>();
-/*
+        final Array<Connection<Node>> array = new Array<>();
+
         final List<Node> neighbors = getNeighbors(fromNode);
         for (final Node neighbor : neighbors) {// fixme lambda
             array.add(new DefaultConnection<>(fromNode, neighbor));
-        }*/
+        }
 
-        getNeighbors(fromNode).stream().map(node -> new DefaultConnection<>(fromNode, node)).forEach(array::add);
+//        getNeighbors(fromNode).stream().map(node -> new DefaultConnection<>(fromNode, node)).forEach(array::add);
 
         return array;
     }
@@ -46,7 +52,6 @@ public class IndexedNodeGraph implements IndexedGraph<Node> {
     public List<Node> getNeighbors(final Node node) {
         final int x = node.getX();
         final int y = node.getY();
-
         final List<Node> neighbors = new ArrayList<>(8);
 
 
@@ -76,7 +81,7 @@ public class IndexedNodeGraph implements IndexedGraph<Node> {
             }
         }
 
-        if (y + 1 < map.length) {
+        if (y + 1 < map[0].length) {
             if (x - 1 >= 0) {
                 if (!map[x - 1][y + 1].isBlocked()) {
                     neighbors.add(map[x - 1][y + 1]);
@@ -92,6 +97,11 @@ public class IndexedNodeGraph implements IndexedGraph<Node> {
             }
         }
 
+        System.out.println("Neighbors of " + x + ", " + y + " are: ");
+        for (final Node neighbor : neighbors) {
+            System.out.print("( " + neighbor.getX() + ", " + neighbor.getY() + "); ");
+        }
+        System.out.println();
         return neighbors;
     }
 }

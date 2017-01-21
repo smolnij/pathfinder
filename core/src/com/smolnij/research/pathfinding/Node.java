@@ -8,7 +8,7 @@ public class Node implements TileCoordinatesAware {
 
     private final int x;
     private final int y;
-    private boolean blocked;
+    private final boolean blocked;
 
 
     private Node pathParent;
@@ -47,7 +47,7 @@ public class Node implements TileCoordinatesAware {
             }
         }
 
-        if (y + 1 < map.length) {
+        if (y + 1 < map[0].length) {
             if (x - 1 >= 0) {
                 if (!map[x - 1][y + 1].blocked) {
                     neighbors.add(map[x - 1][y + 1]);
@@ -66,21 +66,22 @@ public class Node implements TileCoordinatesAware {
         return neighbors;
     }
 
-    Node getPathParent() {
+    public Node getPathParent() {
         return pathParent;
     }
 
-    void setPathParent(final Node pathParent) {
+    public void setPathParent(final Node pathParent) {
         this.pathParent = pathParent;
     }
 
     @Override
-    public boolean equals(final Object obj) {
-        if (!(obj instanceof Node)) {
-            return false;
-        }
-        final Node nodeToCompare = (Node) obj;
-        return nodeToCompare.x == x && nodeToCompare.y == y;
+    public boolean equals(final Object otherNode) {
+        if (this == otherNode) return true;
+        if (otherNode == null || getClass() != otherNode.getClass()) return false;
+
+        final Node node = (Node) otherNode;
+
+        return x == node.x && y == node.y && blocked == node.blocked;
     }
 
     @Override
@@ -105,15 +106,4 @@ public class Node implements TileCoordinatesAware {
         return blocked;
     }
 
-    public void block() {
-        this.blocked = true;
-    }
-
-    public void setBlocked(boolean blocked) {
-        this.blocked = blocked;
-    }
-
-    public void unblock() {
-        this.blocked = false;
-    }
 }

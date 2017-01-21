@@ -10,56 +10,92 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.smolnij.research.layout.AtlasHelper;
-import com.smolnij.research.scene.input.FindPathClickListener;
 
 public class ControlPanel extends Stage {
 
-    public ControlPanel(final Viewport viewport, final SpriteBatch sb, final MazeRenderer mazeRenderer) {
+    public ControlPanel(final Viewport viewport, final SpriteBatch sb, final MazeRenderer mazeRenderer, final PathFinder pathFinder) {
         super(viewport, sb);
         final Table table = new Table();
         table.bottom().left();
 
         table.setFillParent(true);
 
-        table.add(createDrawWallsButton(mazeRenderer)).pad(10);
-        table.add(createRemoveWallsButton(mazeRenderer)).pad(10);
-
-        final Button findPath = new ImageButton(
-                AtlasHelper.INSTANCE.createSpriteDrawable("find-path-btn"),
-                AtlasHelper.INSTANCE.createSpriteDrawable("find-path-btn-down"));
-
-        findPath.addListener(new FindPathClickListener());
-        table.add(findPath).pad(10);
+        table.add(createDrawWallsButton(mazeRenderer, pathFinder)).pad(10);
+        table.add(createRemoveWallButton(mazeRenderer)).pad(10);
+        table.add(createFindPathButton(pathFinder)).pad(10);
+        table.row();
+        table.add(createClearWallButton(mazeRenderer)).pad(10);
+        table.add(createClearPathsButton(pathFinder)).pad(10);
 
         addActor(table);
 
     }
 
-    private Button createRemoveWallsButton(final MazeRenderer mazeRenderer) {
-        final Button removeWalls = new ImageButton(AtlasHelper.INSTANCE.createSpriteDrawable("remove-wall-btn"),
-                AtlasHelper.INSTANCE.createSpriteDrawable("remove-wall-btn-down"));
+    private Button createClearPathsButton(final PathFinder pathFinder) {
+        final Button clearWallsBtn = createImageButton("clear-paths-btn");
+        clearWallsBtn.addListener(new ClickListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                pathFinder.clearPaths();
+                return true;
+            }
+        });
+        return clearWallsBtn;
+    }
 
-        removeWalls.addListener(new ClickListener() {
+    private Button createClearWallButton(final MazeRenderer mazeRenderer) {
+        final Button clearWallsBtn = createImageButton("clear-walls-btn");
+        clearWallsBtn.addListener(new ClickListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                mazeRenderer.clearWalls();
+                return true;
+            }
+        });
+        return clearWallsBtn;
+    }
+
+    private Button createFindPathButton(final PathFinder pathFinder) {
+        final Button findPath = createImageButton("find-path-btn");
+        findPath.addListener(new ClickListener() {
+            @Override
+            public boolean touchDown(final InputEvent event, final float x, final float y, final int pointer, final int button) {
+                pathFinder.findPath();
+                return true;
+            }
+        });
+        return findPath;
+    }
+
+    private Button createRemoveWallButton(final MazeRenderer mazeRenderer) {
+        final Button removeWall = createImageButton("remove-wall-btn");
+        removeWall.addListener(new ClickListener() {
             @Override
             public boolean touchDown(final InputEvent event, final float x, final float y, final int pointer, final int button) {
                 mazeRenderer.toRemoveWallsState();
                 return true;
             }
         });
-        return removeWalls;
+        return removeWall;
     }
 
-    private Button createDrawWallsButton(final MazeRenderer mazeRenderer) {
-        final Button drawWalls = new ImageButton(AtlasHelper.INSTANCE.createSpriteDrawable("draw-walls-btn"),
-                AtlasHelper.INSTANCE.createSpriteDrawable("draw-walls-btn-down"));
+    private Button createDrawWallsButton(final MazeRenderer mazeRenderer, final PathFinder pathFinder) {
+        final Button drawWalls = createImageButton("draw-walls-btn");
         drawWalls.addListener(new ClickListener() {
             @Override
             public boolean touchDown(final InputEvent event, final float x, final float y, final int pointer, final int button) {
+                pathFinder.clearPaths();
                 mazeRenderer.toDrawWallsState();
                 return true;
             }
         });
         return drawWalls;
+    }
+
+    private Button createImageButton(final String buttonTextureName) {
+        return new ImageButton(
+                AtlasHelper.INSTANCE.createSpriteDrawable(buttonTextureName),
+                AtlasHelper.INSTANCE.createSpriteDrawable(buttonTextureName + "-down"));
     }
 
 }
