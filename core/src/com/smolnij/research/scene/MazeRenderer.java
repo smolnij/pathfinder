@@ -21,7 +21,7 @@ public class MazeRenderer implements InputProcessor {
     private final Vector3 wallCursorCoords = new Vector3();
     private final TiledMapPoint startPoint;
     private final TiledMapPoint targetPoint;
-    private final Node[][] maze;
+    private Node[][] maze;
     private boolean dragging;
     private TextureRegion cursor;
     private boolean blockCell;
@@ -77,6 +77,10 @@ public class MazeRenderer implements InputProcessor {
                 }
             }
         }
+    }
+
+    public void setWalls(final Node[][] maze) {
+        this.maze = maze;
     }
 
     public void clearWalls() {

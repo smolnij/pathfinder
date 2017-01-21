@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.smolnij.research.layout.AtlasHelper;
+import com.smolnij.research.maze.MazeGenerator;
 
 public class ControlPanel extends Stage {
 
@@ -17,18 +18,32 @@ public class ControlPanel extends Stage {
         super(viewport, sb);
         final Table table = new Table();
         table.bottom().left();
-
         table.setFillParent(true);
 
-        table.add(createDrawWallsButton(mazeRenderer, pathFinder)).pad(10);
-        table.add(createRemoveWallButton(mazeRenderer)).pad(10);
-        table.add(createFindPathButton(pathFinder)).pad(10);
+        table.add(createMazeGeneratorButton(mazeRenderer, new MazeGenerator(12, 14))).pad(5);
+        table.add(createDrawWallsButton(mazeRenderer, pathFinder)).pad(5);
+        table.add(createRemoveWallButton(mazeRenderer)).pad(5);
+        table.add(createFindPathButton(pathFinder)).pad(5);
         table.row();
-        table.add(createClearWallButton(mazeRenderer)).pad(10);
-        table.add(createClearPathsButton(pathFinder)).pad(10);
+        table.add(createClearWallButton(mazeRenderer)).pad(5);
+        table.add(createClearPathsButton(pathFinder)).pad(5);
 
         addActor(table);
 
+    }
+
+    private Button createMazeGeneratorButton(final MazeRenderer mazeRenderer, final MazeGenerator mazeGenerator) {
+        final Button generateMazeBtn = createImageButton("generate-maze-btn");
+        generateMazeBtn.addListener(new ClickListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                mazeGenerator.generateMaze(6, 5);
+                mazeGenerator.updateGrid();
+                mazeRenderer.setWalls(mazeGenerator.getGrid());
+                return true;
+            }
+        });
+        return generateMazeBtn;
     }
 
     private Button createClearPathsButton(final PathFinder pathFinder) {

@@ -25,7 +25,7 @@ import com.smolnij.research.scene.TiledMapPoint;
 public class PathFindingResearchApp extends ApplicationAdapter {
     public static final int VIRTUAL_WIDTH = 800;
     public static final int VIRTUAL_HEIGHT = 480;
-    public static final int PANEL_HEIGHT = 130;
+    public static final int PANEL_HEIGHT = 100;
 
     private static final int START_X = 10;
     private static final int START_Y = 15;
