@@ -16,7 +16,6 @@ import java.util.List;
 
 public class PathFinder {
     private List<Node> path = new ArrayList<>();
-    private List<Node> steps = new ArrayList<>();
     private final Node[][] maze;
     private final Node start;
     private final Node end;
@@ -27,8 +26,6 @@ public class PathFinder {
         this.maze = maze;
         this.start = new Node(start.x, start.y, false);
         this.end = new Node(end.x, end.y, false);
-//        this.start = new Node(0, 0, false, 0);
-//        this.end = new Node(0, 25, false, 25);
     }
 
     public void findPath() {

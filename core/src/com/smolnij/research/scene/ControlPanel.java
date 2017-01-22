@@ -20,7 +20,7 @@ public class ControlPanel extends Stage {
         table.bottom().left();
         table.setFillParent(true);
 
-        table.add(createMazeGeneratorButton(mazeRenderer, new MazeGenerator(12, 14))).pad(5);
+        table.add(createMazeGeneratorButton(mazeRenderer, new MazeGenerator(49, 29))).pad(5);
         table.add(createDrawWallsButton(mazeRenderer, pathFinder)).pad(5);
         table.add(createRemoveWallButton(mazeRenderer)).pad(5);
         table.add(createFindPathButton(pathFinder)).pad(5);

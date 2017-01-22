@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.HdpiUtils;
-import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
@@ -22,9 +21,11 @@ import com.smolnij.research.scene.MazeRenderer;
 import com.smolnij.research.scene.PathFinder;
 import com.smolnij.research.scene.TiledMapPoint;
 
+import static com.smolnij.research.scene.MazeRenderer.*;
+
 public class PathFindingResearchApp extends ApplicationAdapter {
-    public static final int VIRTUAL_WIDTH = 800;
-    public static final int VIRTUAL_HEIGHT = 480;
+    public static final int VIRTUAL_WIDTH = MAP_WIDTH * TILE_WIDTH;
+    public static final int VIRTUAL_HEIGHT = MAP_HEIGHT * TILE_HEIGHT;
     public static final int PANEL_HEIGHT = 100;
 
     private static final int START_X = 10;
@@ -68,7 +69,7 @@ public class PathFindingResearchApp extends ApplicationAdapter {
     }
 
     private Node[][] initMaze() {
-        final Node[][] maze = new Node[getMapWidth(map)][getMapHeight(map)];
+        final Node[][] maze = new Node[MAP_WIDTH][MAP_HEIGHT];
         for (int x = 0; x < maze.length; x++) {
             for (int y = 0; y < maze[0].length; y++) {
                 maze[x][y] = new Node(x, y, false);
@@ -78,27 +79,13 @@ public class PathFindingResearchApp extends ApplicationAdapter {
     }
 
     private void prepareMap(final TiledMap tiledMap) {
-        final MapProperties mapProperties = map.getProperties();
-        final int mapTileWidth = mapProperties.get("tilewidth", Integer.class);
-        final int mapTileHeight = mapProperties.get("tileheight", Integer.class);
-
-        final TiledMapTileLayer wallsAndActionLayer = new TiledMapTileLayer(getMapWidth(tiledMap), getMapHeight(tiledMap), mapTileWidth, mapTileHeight);
+        final TiledMapTileLayer wallsAndActionLayer = new TiledMapTileLayer(MAP_WIDTH, MAP_HEIGHT, TILE_WIDTH, TILE_HEIGHT);
         wallsAndActionLayer.setName("wallsAndAction");
 
         addStart(wallsAndActionLayer);
         addTarget(wallsAndActionLayer);
 
         tiledMap.getLayers().add(wallsAndActionLayer);
-    }
-
-    private Integer getMapHeight(final TiledMap tiledMap) {
-        final MapProperties mapProperties = tiledMap.getProperties();
-        return mapProperties.get("height", Integer.class);
-    }
-
-    private Integer getMapWidth(final TiledMap tiledMap) {
-        final MapProperties mapProperties = tiledMap.getProperties();
-        return mapProperties.get("width", Integer.class);
     }
 
     private void addStart(final TiledMapTileLayer wallsAndActionLayer) {
@@ -117,7 +104,7 @@ public class PathFindingResearchApp extends ApplicationAdapter {
 
     private TiledMapRenderer setUpMapRenderer(final TiledMap map) {
         mapCamera = new OrthographicCamera();
-        mapCamera.setToOrtho(true, getMapWidth(map), getMapHeight(map));
+        mapCamera.setToOrtho(true, MAP_WIDTH, MAP_HEIGHT);
         mapCamera.update();
         final TiledMapRenderer renderer = new OrthoCachedTiledMapRenderer(map, 1 / 16f);
         renderer.setView(mapCamera);
@@ -126,12 +113,11 @@ public class PathFindingResearchApp extends ApplicationAdapter {
 
     @Override
     public void render() {
-        Gdx.gl.glClearColor(1, 0, 0, 1);
+        Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         HdpiUtils.glViewport(0, PANEL_HEIGHT, Gdx.graphics.getWidth(), VIRTUAL_HEIGHT);
         tiledMapRenderer.render();
-
 
         batch.enableBlending();
         mazeRenderer.render();

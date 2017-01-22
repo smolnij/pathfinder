@@ -15,6 +15,11 @@ import static com.smolnij.research.PathFindingResearchApp.VIRTUAL_HEIGHT;
 
 public class MazeRenderer implements InputProcessor {
 
+    public static final int MAP_WIDTH = 49;
+    public static final int MAP_HEIGHT = 29;
+    public static final int TILE_WIDTH = 16;
+    public static final int TILE_HEIGHT = 16;
+
     private final SpriteBatch batch;
     private final OrthographicCamera camera;
     private final Vector3 touchPoint = new Vector3(-1, -1, -1);
