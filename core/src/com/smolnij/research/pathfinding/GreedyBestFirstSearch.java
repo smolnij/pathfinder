@@ -14,10 +14,6 @@ public class GreedyBestFirstSearch {
 //        final PriorityBuffer open = new PriorityBuffer(new HeuristicNodeComparator(goal));
         final PriorityQueue<Node> open = new PriorityQueue<>(new HeuristicNodeComparator<>(goal));
 
-        //FIXME open.add(new Node()) used here instead of open.add(start), but! but! maybe we can use coords here instead of Node
-        //moreover pathfinder getNeighbors and setPathParent has to do ONLY
-        //with path finder Node, not MAP NODE
-//        open.add(start);
         open.add(new Node(start.getX(), start.getY(), start.isBlocked()));
         while (!open.isEmpty()) {
             final Node current = open.remove();
@@ -47,5 +43,6 @@ public class GreedyBestFirstSearch {
     public Collection<Node> getClosed() {
         return closed;
     }
+
 }
 

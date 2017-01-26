@@ -92,8 +92,6 @@ public class AStar {
                 if (pathPoint == null) break;
             }
 
-        } else {
-            System.out.println("NO ROUTE");
         }
         return path;
     }

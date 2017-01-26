@@ -77,8 +77,11 @@ public class MazeRenderer implements InputProcessor {
     private void drawMaze() {
         for (int i = 0; i < maze.length; i++) {
             for (int j = 0; j < maze[0].length; j++) {
-                if (maze[i][j].isBlocked()) {
+                final Node node = maze[i][j];
+                if (node.isBlocked()) {
                     batch.draw(AtlasHelper.INSTANCE.getWallTexture(), i, j, 1, 1);
+                } else if (node.getState() != null) {
+                    batch.draw(AtlasHelper.INSTANCE.findRegion(node.getState().name().toLowerCase()), i, j, 1, 1);
                 }
             }
         }

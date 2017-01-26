@@ -24,10 +24,7 @@ public class HeuristicNodeComparator<T>/*<T extends TileCoordinatesAware> implem
 
         final int o1Cost = manhattanHeuristic(goal, o1);
         final int o2Cost = manhattanHeuristic(goal, o2);
-        if (o1Cost == o2Cost) {
-            return 0;
-        }
-        return o1Cost > o2Cost ? 1 : -1;
+        return o1Cost - o2Cost;
     }
 
     private static double diagonalHeuristic(final Node goal, final Node node) {

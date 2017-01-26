@@ -1,6 +1,8 @@
 package com.smolnij.research.pathfinding;
 
 
+import com.smolnij.research.pathfinding.algorithms.NodeState;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,6 +11,7 @@ public class Node implements TileCoordinatesAware {
     private final int x;
     private final int y;
     private final boolean blocked;
+    private NodeState state;
 
 
     private Node pathParent;
@@ -75,6 +78,11 @@ public class Node implements TileCoordinatesAware {
     }
 
     @Override
+    public String toString() {
+        return "x: " + x + "; y: " + y + ";";
+    }
+
+    @Override
     public boolean equals(final Object otherNode) {
         if (this == otherNode) return true;
         if (otherNode == null || getClass() != otherNode.getClass()) return false;
@@ -106,4 +114,11 @@ public class Node implements TileCoordinatesAware {
         return blocked;
     }
 
+    public NodeState getState() {
+        return state;
+    }
+
+    public void setState(final NodeState state) {
+        this.state = state;
+    }
 }

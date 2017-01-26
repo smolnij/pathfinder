@@ -11,7 +11,7 @@ public class MazeGenerator {
     private MazeCell[][] cells;
     private final int gridDimensionX, gridDimensionY;
     private final int mazeStepX, mazeStepY;
-    private Node[][] grid;
+    private final Node[][] grid;
 
     public MazeGenerator(final int width, final int height) {
         this.mazeStepX = (width - 1) / 4;

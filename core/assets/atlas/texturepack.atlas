@@ -4,6 +4,13 @@ size: 1024,128
 format: RGBA4444
 filter: Linear,Linear
 repeat: none
+candidate_under_inspection
+  rotate: false
+  xy: 719, 68
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
 clear-all-btn
   rotate: false
   xy: 700, 2
@@ -48,7 +55,7 @@ clear-walls-btn-down
   index: -1
 draw-wall-cursor
   rotate: false
-  xy: 719, 68
+  xy: 844, 110
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
@@ -95,6 +102,27 @@ generate-maze-btn-down
   orig: 193, 40
   offset: 0, 0
   index: -1
+inspected
+  rotate: false
+  xy: 719, 50
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+inspected_candidate
+  rotate: false
+  xy: 737, 68
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+path
+  rotate: false
+  xy: 844, 92
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
 remove-wall-btn
   rotate: false
   xy: 258, 86
@@ -111,35 +139,35 @@ remove-wall-btn-down
   index: -1
 remove-wall-cursor
   rotate: false
-  xy: 844, 110
+  xy: 862, 110
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 start
   rotate: false
-  xy: 719, 50
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-step0
-  rotate: false
-  xy: 737, 68
+  xy: 737, 50
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 target
   rotate: false
-  xy: 844, 92
+  xy: 755, 68
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+under_inspection
+  rotate: false
+  xy: 862, 92
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 wall
   rotate: false
-  xy: 862, 110
+  xy: 880, 110
   size: 16, 16
   orig: 16, 16
   offset: 0, 0

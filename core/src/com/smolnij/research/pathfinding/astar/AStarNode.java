@@ -8,7 +8,6 @@ public class AStarNode extends Node {
     public int g = 0;
     public int h = 0;
     public AStarNode parent;
-    public boolean road;
 
     public AStarNode(int x, int y, boolean blocked) {
         super(x, y, blocked);
