@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.smolnij.research.layout.AtlasHelper;
 import com.smolnij.research.pathfinding.GreedyBestFirstSearch;
 import com.smolnij.research.pathfinding.Node;
-import com.smolnij.research.pathfinding.algorithms.BestFirstSearch2;
+import com.smolnij.research.pathfinding.breadthFirst.BreadthFirstSearch;
 import com.smolnij.research.pathfinding.datastructure.IndexedNodeGraph;
 import com.smolnij.research.pathfinding.heuristic.ManhattanDistance;
 
@@ -37,9 +37,10 @@ public class PathFinder {
             System.out.println("Findpath thread started");
 //            final List<Node> nodes = greedyBestFirstSearch.greedyBestFirstSearch(start, end, maze);
 
-            final BestFirstSearch2 bfs2 = new BestFirstSearch2(50, maze);
-            final List<Node> nodes = bfs2.run(start, end);
+//            final BestFirstSearch bfs2 = new BestFirstSearch(50, maze);
+//            final List<Node> nodes = bfs2.run(start, end);
 
+            final List<Node> nodes = BreadthFirstSearch.search(start, end, maze);
 
 //            final List<Node> nodes = new AStar(maze).search(start, end);
             path.addAll(nodes);

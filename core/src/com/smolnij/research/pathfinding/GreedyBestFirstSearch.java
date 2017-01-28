@@ -25,6 +25,7 @@ public class GreedyBestFirstSearch {
                 if (!closed.contains(n)) {
                     n.setPathParent(current);
                     open.add(n);
+                    closed.add(n);
                 }
             }
         }

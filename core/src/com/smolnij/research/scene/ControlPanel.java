@@ -10,7 +10,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.smolnij.research.layout.AtlasHelper;
-import com.smolnij.research.maze.MazeGenerator;
 
 public class ControlPanel extends Stage {
 
@@ -20,7 +19,7 @@ public class ControlPanel extends Stage {
         table.bottom().left();
         table.setFillParent(true);
 
-        table.add(createMazeGeneratorButton(mazeRenderer, new MazeGenerator(49, 29))).pad(5);
+        table.add(createMazeGeneratorButton(mazeRenderer)).pad(5);
         table.add(createDrawWallsButton(mazeRenderer, pathFinder)).pad(5);
         table.add(createRemoveWallButton(mazeRenderer)).pad(5);
         table.add(createFindPathButton(pathFinder)).pad(5);
@@ -32,14 +31,12 @@ public class ControlPanel extends Stage {
 
     }
 
-    private Button createMazeGeneratorButton(final MazeRenderer mazeRenderer, final MazeGenerator mazeGenerator) {
+    private Button createMazeGeneratorButton(final MazeRenderer mazeRenderer) {
         final Button generateMazeBtn = createImageButton("generate-maze-btn");
         generateMazeBtn.addListener(new ClickListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                mazeGenerator.generateMaze(6, 5);
-                mazeGenerator.updateGrid();
-                mazeRenderer.setWalls(mazeGenerator.getGrid());
+                mazeRenderer.generateMaze();
                 return true;
             }
         });

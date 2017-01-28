@@ -6,15 +6,15 @@ import com.smolnij.research.pathfinding.Node;
 import java.util.LinkedList;
 import java.util.List;
 
-public class BestFirstSearch2 extends SearchAlgorithms {
+public class BestFirstSearch extends SearchAlgorithms {
 
 
+    private final LinkedList<Node> open = new LinkedList<>();
+    private final LinkedList<Node> closed = new LinkedList<>();
 
-    private LinkedList<Node> open = new LinkedList<>();
-    private LinkedList<Node> closed = new LinkedList<>();
-
-    public BestFirstSearch2(int refreshRate, Node[][] map) {
+    public BestFirstSearch(final int refreshRate, final Node[][] map) {
         super(refreshRate, map);
+        //todo priority queue
     }
 
     public List<Node> run(final Node start, final Node goal) {

@@ -21,7 +21,6 @@ public class MazeGenerator {
         gridDimensionY = height;
 
         grid = new Node[gridDimensionX][gridDimensionY];
-        init();
     }
 
     private void init() {
@@ -34,12 +33,17 @@ public class MazeGenerator {
     }
 
 
-    public void generateMaze(final int x, final int y) {
-        final MazeCell startAt = getCell(x, y);
-        if (startAt == null) return;
+    public void generateMaze(final int startX, final int startY, final int endX, final int endY) {
+        init();
+        final MazeCell startAt = getCell(startX / 4, startY / 2);
         startAt.open = false;
+
+        final MazeCell endAt = getCell(endX / 4, endY / 2);
+        endAt.open = false;
+
         final List<MazeCell> cells = new ArrayList<>();
         cells.add(startAt);
+        cells.add(endAt);
 
         while (!cells.isEmpty()) {
             MazeCell cell;
@@ -73,6 +77,7 @@ public class MazeGenerator {
             cells.add(cell);
             cells.add(selected);
         }
+        updateGrid();
     }
 
     private MazeCell getCell(final int x, final int y) {
@@ -86,7 +91,7 @@ public class MazeGenerator {
         return grid;
     }
 
-    public void updateGrid() {
+    private void updateGrid() {
         for (int x = 0; x < gridDimensionX; x++) {
             for (int y = 0; y < gridDimensionY; y++) {
                 grid[x][y] = new Node(x, y, false);

@@ -9,7 +9,8 @@ public class HtmlLauncher extends GwtApplication {
 
         @Override
         public GwtApplicationConfiguration getConfig () {
-                return new GwtApplicationConfiguration(PathFindingResearchApp.VIRTUAL_WIDTH, PathFindingResearchApp.VIRTUAL_HEIGHT + PathFindingResearchApp.PANEL_HEIGHT);
+                return new GwtApplicationConfiguration(PathFindingResearchApp.VIRTUAL_WIDTH,
+                        PathFindingResearchApp.VIRTUAL_HEIGHT + PathFindingResearchApp.PANEL_HEIGHT);
         }
 
         @Override

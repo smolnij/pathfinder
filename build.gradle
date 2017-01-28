@@ -6,7 +6,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'de.richsource.gradle.plugins:gwt-gradle-plugin:0.6'
+        classpath 'de.richsource.gradle.plugins:gwt-gradle-plugin:0.6+'
     }
 }
 
@@ -17,7 +17,7 @@ allprojects {
     version = '1.0'
     ext {
         appName = "pathfinding"
-        gdxVersion = '1.9.5'
+        gdxVersion = '1.9.5+'
         roboVMVersion = '2.3.0'
         box2DLightsVersion = '1.4'
         ashleyVersion = '1.7.0'
@@ -64,10 +64,10 @@ project(":core") {
 
 
     dependencies {
-        testCompile "junit:junit:4.11"
+        testCompile "junit:junit:4.11+"
         compile "com.badlogicgames.gdx:gdx:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-ai:$aiVersion"
-        compile group: 'org.apache.commons', name: 'commons-collections4', version: '4.1'
+        compile group: 'org.apache.commons', name: 'commons-collections4', version: '4.1+'
     }
 }
 

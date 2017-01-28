@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector3;
 import com.smolnij.research.layout.AtlasHelper;
+import com.smolnij.research.maze.MazeGenerator;
 import com.smolnij.research.pathfinding.Node;
 
 import static com.smolnij.research.PathFindingResearchApp.PANEL_HEIGHT;
@@ -30,6 +31,7 @@ public class MazeRenderer implements InputProcessor {
     private boolean dragging;
     private TextureRegion cursor;
     private boolean blockCell;
+    private MazeGenerator mazeGenerator;
 
     public MazeRenderer(final SpriteBatch batch, final OrthographicCamera camera,
                         final TiledMapPoint startPoint,
@@ -39,6 +41,7 @@ public class MazeRenderer implements InputProcessor {
         this.startPoint = startPoint;
         this.targetPoint = targetPoint;
         this.maze = maze;
+        mazeGenerator = new MazeGenerator(MAP_WIDTH, MAP_HEIGHT);
         toWaitingState();
     }
 
@@ -87,8 +90,13 @@ public class MazeRenderer implements InputProcessor {
         }
     }
 
-    public void setWalls(final Node[][] maze) {
+    private void setWalls(final Node[][] maze) {
         this.maze = maze;
+    }
+
+    public void generateMaze() {
+        mazeGenerator.generateMaze(startPoint.x, startPoint.y, targetPoint.x, targetPoint.y);
+        setWalls(mazeGenerator.getGrid());
     }
 
     public void clearWalls() {
