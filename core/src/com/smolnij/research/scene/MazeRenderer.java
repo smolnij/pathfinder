@@ -94,6 +94,10 @@ public class MazeRenderer implements InputProcessor {
         this.maze = maze;
     }
 
+    public Node[][] getMaze() {
+        return maze;
+    }
+
     public void generateMaze() {
         mazeGenerator.generateMaze(startPoint.x, startPoint.y, targetPoint.x, targetPoint.y);
         setWalls(mazeGenerator.getGrid());

@@ -59,7 +59,7 @@ public class PathFindingResearchApp extends ApplicationAdapter {
         mazeRenderer = new MazeRenderer(batch, mapCamera,
                 new TiledMapPoint(START_X, START_Y), new TiledMapPoint(TARGET_X, TARGET_Y), maze);
 
-        pathFinder = new PathFinder(maze, new TiledMapPoint(START_X, START_Y), new TiledMapPoint(TARGET_X, TARGET_Y));
+        pathFinder = new PathFinder(mazeRenderer, new TiledMapPoint(START_X, START_Y), new TiledMapPoint(TARGET_X, TARGET_Y));
 
         controlPanel = new ControlPanel(new FitViewport(Gdx.graphics.getWidth(), VIRTUAL_HEIGHT + PANEL_HEIGHT), batch,
                 mazeRenderer, pathFinder);
