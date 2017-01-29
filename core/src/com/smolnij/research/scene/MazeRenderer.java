@@ -83,8 +83,6 @@ public class MazeRenderer implements InputProcessor {
                 final Node node = maze[i][j];
                 if (node.isBlocked()) {
                     batch.draw(AtlasHelper.INSTANCE.getWallTexture(), i, j, 1, 1);
-                } else if (node.getState() != null) {
-                    batch.draw(AtlasHelper.INSTANCE.findRegion(node.getState().name().toLowerCase()), i, j, 1, 1);
                 }
             }
         }
