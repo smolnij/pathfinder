@@ -13,19 +13,19 @@ import com.smolnij.research.layout.AtlasHelper;
 
 public class ControlPanel extends Stage {
 
-    public ControlPanel(final Viewport viewport, final SpriteBatch sb, final MazeRenderer mazeRenderer, final PathFinder pathFinder) {
+    public ControlPanel(final Viewport viewport, final SpriteBatch sb, final MazeRenderer mazeRenderer, final PathRenderer pathRenderer) {
         super(viewport, sb);
         final Table table = new Table();
         table.bottom().left();
         table.setFillParent(true);
 
         table.add(createMazeGeneratorButton(mazeRenderer)).pad(5);
-        table.add(createDrawWallsButton(mazeRenderer, pathFinder)).pad(5);
+        table.add(createDrawWallsButton(mazeRenderer, pathRenderer)).pad(5);
         table.add(createRemoveWallButton(mazeRenderer)).pad(5);
-        table.add(createFindPathButton(pathFinder)).pad(5);
+        table.add(createFindPathButton(pathRenderer)).pad(5);
         table.row();
         table.add(createClearWallButton(mazeRenderer)).pad(5);
-        table.add(createClearPathsButton(pathFinder)).pad(5);
+        table.add(createClearPathsButton(pathRenderer)).pad(5);
 
         addActor(table);
 
@@ -43,12 +43,12 @@ public class ControlPanel extends Stage {
         return generateMazeBtn;
     }
 
-    private Button createClearPathsButton(final PathFinder pathFinder) {
+    private Button createClearPathsButton(final PathRenderer pathRenderer) {
         final Button clearWallsBtn = createImageButton("clear-paths-btn");
         clearWallsBtn.addListener(new ClickListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                pathFinder.clearPaths();
+                pathRenderer.clearPaths();
                 return true;
             }
         });
@@ -67,12 +67,12 @@ public class ControlPanel extends Stage {
         return clearWallsBtn;
     }
 
-    private Button createFindPathButton(final PathFinder pathFinder) {
+    private Button createFindPathButton(final PathRenderer pathRenderer) {
         final Button findPath = createImageButton("find-path-btn");
         findPath.addListener(new ClickListener() {
             @Override
             public boolean touchDown(final InputEvent event, final float x, final float y, final int pointer, final int button) {
-                pathFinder.findPath();
+                pathRenderer.findPath();
                 return true;
             }
         });
@@ -91,12 +91,12 @@ public class ControlPanel extends Stage {
         return removeWall;
     }
 
-    private Button createDrawWallsButton(final MazeRenderer mazeRenderer, final PathFinder pathFinder) {
+    private Button createDrawWallsButton(final MazeRenderer mazeRenderer, final PathRenderer pathRenderer) {
         final Button drawWalls = createImageButton("draw-walls-btn");
         drawWalls.addListener(new ClickListener() {
             @Override
             public boolean touchDown(final InputEvent event, final float x, final float y, final int pointer, final int button) {
-                pathFinder.clearPaths();
+                pathRenderer.clearPaths();
                 mazeRenderer.toDrawWallsState();
                 return true;
             }

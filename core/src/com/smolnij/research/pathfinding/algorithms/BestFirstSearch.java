@@ -1,32 +1,50 @@
 package com.smolnij.research.pathfinding.algorithms;
 
 
+import com.smolnij.research.pathfinding.Node;
+
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-public class BestFirstSearch {
+public class BestFirstSearch extends PathFinder {
 
 
     private final LinkedList<PathGraphNode> open = new LinkedList<>();
     private final LinkedList<PathGraphNode> closed = new LinkedList<>();
     private PathGraphNode start;
     private PathGraphNode goal;
-    private PathGraphNode[][] map;
+    private PathGraphNode[][] mazeGraph;
 
     public BestFirstSearch() {
         //todo priority queue
     }
 
 
-    public void init(final PathGraphNode start, final PathGraphNode goal, final PathGraphNode[][] map) {
-        open.add(start);
-        this.goal = goal;
-        this.start = start;
-        this.map = map;
+    @Override
+    public void init(final Node start, final Node goal, final Node[][] maze) {
+        open.clear();
+        closed.clear();
+        this.mazeGraph = buildGraph(maze);
+
+        final PathGraphNode startGraphNode = mazeGraph[start.getX()][start.getY()];
+        open.add(startGraphNode);
+        this.goal = mazeGraph[goal.getX()][goal.getY()];
+        this.start = startGraphNode;
+
     }
 
+    private PathGraphNode[][] buildGraph(final Node[][] maze) {
+        final PathGraphNode[][] graph = new PathGraphNode[maze.length][maze[0].length];
+        for (int i = 0; i < maze.length; i++) {
+            for (int j = 0; j < maze[0].length; j++) {
+                graph[i][j] = new PathGraphNode(i, j, maze[i][j].isBlocked());
+            }
+        }
+        return graph;
+    }
 
+    @Override
     public boolean update(final Set<PathGraphNode> nodesToVisualize) {
         PathGraphNode current = open.get(0);
 
@@ -43,10 +61,10 @@ public class BestFirstSearch {
         nodesToVisualize.add(current);
         closed.add(current);
         if (goal.equals(current)) {
-            markPath(start, goal);
+            markPath();
             return true;
         } else {
-            final List<PathGraphNode> toAdd = current.getNeighbors(map);
+            final List<PathGraphNode> toAdd = current.getNeighbors(mazeGraph);
             for (final PathGraphNode newNode : toAdd) {
                 if (!closed.contains(newNode)) {
                     newNode.setParent(current);
@@ -65,7 +83,7 @@ public class BestFirstSearch {
         return Math.abs(endNode.getX() - node.getX()) + Math.abs(endNode.getY() - node.getY());
     }
 
-    private void markPath(final PathGraphNode start, final PathGraphNode goal) {
+    private void markPath() {
         PathGraphNode currentNode = goal;
         while (!currentNode.equals(start)) {
             currentNode.setState(NodeState.PATH);

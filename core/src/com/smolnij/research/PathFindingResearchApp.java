@@ -18,7 +18,7 @@ import com.smolnij.research.layout.AtlasHelper;
 import com.smolnij.research.pathfinding.Node;
 import com.smolnij.research.scene.ControlPanel;
 import com.smolnij.research.scene.MazeRenderer;
-import com.smolnij.research.scene.PathFinder;
+import com.smolnij.research.scene.PathRenderer;
 import com.smolnij.research.scene.TiledMapPoint;
 
 import static com.smolnij.research.scene.MazeRenderer.*;
@@ -39,7 +39,7 @@ public class PathFindingResearchApp extends ApplicationAdapter {
     private ControlPanel controlPanel;
     private OrthographicCamera mapCamera;
     private MazeRenderer mazeRenderer;
-    private PathFinder pathFinder;
+    private PathRenderer pathRenderer;
 
 
     @Override
@@ -59,10 +59,10 @@ public class PathFindingResearchApp extends ApplicationAdapter {
         mazeRenderer = new MazeRenderer(batch, mapCamera,
                 new TiledMapPoint(START_X, START_Y), new TiledMapPoint(TARGET_X, TARGET_Y), maze);
 
-        pathFinder = new PathFinder(mazeRenderer, new TiledMapPoint(START_X, START_Y), new TiledMapPoint(TARGET_X, TARGET_Y));
+        pathRenderer = new PathRenderer(mazeRenderer, new TiledMapPoint(START_X, START_Y), new TiledMapPoint(TARGET_X, TARGET_Y));
 
         controlPanel = new ControlPanel(new FitViewport(Gdx.graphics.getWidth(), VIRTUAL_HEIGHT + PANEL_HEIGHT), batch,
-                mazeRenderer, pathFinder);
+                mazeRenderer, pathRenderer);
 
         Gdx.input.setInputProcessor(new InputMultiplexer(controlPanel, mazeRenderer));
 
@@ -121,7 +121,7 @@ public class PathFindingResearchApp extends ApplicationAdapter {
 
         batch.enableBlending();
         mazeRenderer.render();
-        pathFinder.render(batch);
+        pathRenderer.render(batch);
         controlPanel.getViewport().apply();
         controlPanel.act();
         controlPanel.draw();

@@ -49,6 +49,9 @@ public class PathGraphNode {
         this.state = state;
     }
 
+    public boolean isBlocked() {
+        return blocked;
+    }
 
     //todo that is up to list to return neighbor, not node itself
     public List<PathGraphNode> getNeighbors(final PathGraphNode[][] map) {

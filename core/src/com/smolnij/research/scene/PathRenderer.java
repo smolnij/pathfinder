@@ -3,13 +3,14 @@ package com.smolnij.research.scene;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.smolnij.research.layout.AtlasHelper;
 import com.smolnij.research.pathfinding.Node;
-import com.smolnij.research.pathfinding.algorithms.BestFirstSearch;
+import com.smolnij.research.pathfinding.algorithms.PathFinder;
 import com.smolnij.research.pathfinding.algorithms.PathGraphNode;
+import com.smolnij.research.pathfinding.astar.AStar;
 
 import java.util.HashSet;
 import java.util.Set;
 
-public class PathFinder {
+public class PathRenderer {
     private static final int PATH_RENDERING_REFRESH_RATE = 1;
     private Set<PathGraphNode> progress = new HashSet<>();
 
@@ -17,35 +18,25 @@ public class PathFinder {
     private final Node end;
     private boolean pathFindingStarted = false;
     private final MazeRenderer mazeRenderer;
-    private BestFirstSearch bestFirstSearch;
+    private PathFinder bestFirstSearch;
 
-    public PathFinder(final MazeRenderer mazeRenderer, final TiledMapPoint start, final TiledMapPoint end) {
+    public PathRenderer(final MazeRenderer mazeRenderer, final TiledMapPoint start, final TiledMapPoint end) {
         this.mazeRenderer = mazeRenderer;
         this.start = mazeRenderer.getMaze()[start.x][start.y];
         this.end = mazeRenderer.getMaze()[end.x][end.y];
     }
 
     public void findPath() {
-        final PathGraphNode[][] graph = buildGraph();
-        bestFirstSearch = new BestFirstSearch();
-        bestFirstSearch.init(graph[start.getX()][start.getY()], graph[end.getX()][end.getY()], graph);
+        bestFirstSearch = new AStar();
+        bestFirstSearch.init(start, end, mazeRenderer.getMaze());
         pathFindingStarted = true;
     }
 
-    private PathGraphNode[][] buildGraph() {
-        final PathGraphNode[][] graph = new PathGraphNode[mazeRenderer.getMaze().length][mazeRenderer.getMaze()[0].length];
-        for (int i = 0; i < mazeRenderer.getMaze().length; i++) {
-            for (int j = 0; j < mazeRenderer.getMaze()[0].length; j++) {
-                graph[i][j] = new PathGraphNode(i, j, mazeRenderer.getMaze()[i][j].isBlocked());
-            }
-        }
-        return graph;
-    }
 
     public void render(final SpriteBatch batch) {
 
         boolean finished = false;
-        if (pathFindingStarted) { //GWT has no suppurt for standard multithreading, hence the refresh rate used
+        if (pathFindingStarted) { //GWT has no support for standard multithreading, hence the refresh rate used
             for (int i = 0; !finished && i < PATH_RENDERING_REFRESH_RATE; i++) {
                 finished = bestFirstSearch.update(progress);
                 pathFindingStarted = !finished;
