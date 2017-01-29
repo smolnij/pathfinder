@@ -6,7 +6,7 @@ import com.smolnij.research.pathfinding.algorithms.NodeState;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Node implements TileCoordinatesAware {
+public class Node implements GridCoordinatesAware {
 
     private final int x;
     private final int y;

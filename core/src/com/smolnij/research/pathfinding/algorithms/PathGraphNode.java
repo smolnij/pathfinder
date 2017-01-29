@@ -1,9 +1,11 @@
 package com.smolnij.research.pathfinding.algorithms;
 
+import com.smolnij.research.pathfinding.GridCoordinatesAware;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class PathGraphNode {
+public class PathGraphNode implements GridCoordinatesAware {
     private int x;
     private int y;
     private NodeState state;

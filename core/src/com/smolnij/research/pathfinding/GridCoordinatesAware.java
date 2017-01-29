@@ -1,6 +1,6 @@
 package com.smolnij.research.pathfinding;
 
-public interface TileCoordinatesAware {
+public interface GridCoordinatesAware {
     int getX();
 
     int getY();

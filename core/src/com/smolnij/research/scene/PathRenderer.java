@@ -5,7 +5,7 @@ import com.smolnij.research.layout.AtlasHelper;
 import com.smolnij.research.pathfinding.Node;
 import com.smolnij.research.pathfinding.algorithms.PathFinder;
 import com.smolnij.research.pathfinding.algorithms.PathGraphNode;
-import com.smolnij.research.pathfinding.astar.AStar;
+import com.smolnij.research.pathfinding.astar.AStarPathFinder;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -27,7 +27,7 @@ public class PathRenderer {
     }
 
     public void findPath() {
-        bestFirstSearch = new AStar();
+        bestFirstSearch = new AStarPathFinder();
         bestFirstSearch.init(start, end, mazeRenderer.getMaze());
         pathFindingStarted = true;
     }

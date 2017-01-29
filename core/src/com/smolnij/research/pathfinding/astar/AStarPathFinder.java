@@ -1,5 +1,6 @@
 package com.smolnij.research.pathfinding.astar;
 
+import com.smolnij.research.pathfinding.GridCoordinatesAware;
 import com.smolnij.research.pathfinding.Node;
 import com.smolnij.research.pathfinding.algorithms.NodeState;
 import com.smolnij.research.pathfinding.algorithms.PathFinder;
@@ -10,14 +11,11 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-public class AStar extends PathFinder {
+public class AStarPathFinder extends PathFinder {
 
-    private AStarNode[][] mazeGraph;
-    private AStarNode start;
-    private AStarNode goal;
     private final List<AStarNode> open = new LinkedList<>();
     private final List<AStarNode> closed = new LinkedList<>();
-
+    private AStarNode[][] mazeGraph;
 
     public void init(final Node start, final Node goal, final Node[][] maze) {
         open.clear();
@@ -42,14 +40,6 @@ public class AStar extends PathFinder {
         return graph;
     }
 
-    private void markPath() {
-        PathGraphNode pathPoint = goal.getParent();
-        while (!pathPoint.equals(start)) {
-            pathPoint.setState(NodeState.PATH);
-            pathPoint = pathPoint.getParent();
-            if (pathPoint == null) break;
-        }
-    }
 
     public boolean update(final Set<PathGraphNode> nodesToVisualize) {
         final AStarNode currentNode = findCheapest(open);
@@ -92,7 +82,7 @@ public class AStar extends PathFinder {
     }
 
 
-    private int calcStepPrice(final AStarNode a, final AStarNode b) {
+    private int calcStepPrice(final GridCoordinatesAware a, final GridCoordinatesAware b) {
         if (a.getX() == b.getX() || a.getY() == b.getY()) {
             return 10;
         } else {
@@ -100,7 +90,7 @@ public class AStar extends PathFinder {
         }
     }
 
-    private int heuristic(final AStarNode a, final AStarNode b) {
+    private int heuristic(final GridCoordinatesAware a, final GridCoordinatesAware b) {
         return Math.abs(a.getX() - b.getX()) + Math.abs(a.getY() - b.getY());
     }
 

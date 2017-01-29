@@ -1,22 +1,22 @@
 package com.smolnij.research.pathfinding.algorithms;
 
 
+import com.smolnij.research.pathfinding.GridCoordinatesAware;
 import com.smolnij.research.pathfinding.Node;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-public class BestFirstSearch extends PathFinder {
+public class BestFirstPathFinder extends PathFinder {
 
 
     private final LinkedList<PathGraphNode> open = new LinkedList<>();
     private final LinkedList<PathGraphNode> closed = new LinkedList<>();
-    private PathGraphNode start;
-    private PathGraphNode goal;
+
     private PathGraphNode[][] mazeGraph;
 
-    public BestFirstSearch() {
+    public BestFirstPathFinder() {
         //todo priority queue
     }
 
@@ -79,15 +79,7 @@ public class BestFirstSearch extends PathFinder {
         return open.isEmpty();
     }
 
-    private double heuristic(final PathGraphNode node, final PathGraphNode endNode) {
+    private double heuristic(final GridCoordinatesAware node, final GridCoordinatesAware endNode) {
         return Math.abs(endNode.getX() - node.getX()) + Math.abs(endNode.getY() - node.getY());
-    }
-
-    private void markPath() {
-        PathGraphNode currentNode = goal;
-        while (!currentNode.equals(start)) {
-            currentNode.setState(NodeState.PATH);
-            currentNode = currentNode.getParent();
-        }
     }
 }
