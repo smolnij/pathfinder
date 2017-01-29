@@ -5,32 +5,30 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-public class BestFirstSearch extends SearchAlgorithms {
+public class BestFirstSearch {
 
 
     private final LinkedList<PathGraphNode> open = new LinkedList<>();
     private final LinkedList<PathGraphNode> closed = new LinkedList<>();
+    private PathGraphNode start;
+    private PathGraphNode goal;
+    private PathGraphNode[][] map;
 
-    public BestFirstSearch(final int refreshRate, final PathGraphNode[][] map) {
-        super(refreshRate, map);
+    public BestFirstSearch() {
         //todo priority queue
     }
 
-    public List<PathGraphNode> run(final PathGraphNode start, final PathGraphNode goal) {
+
+    public void init(final PathGraphNode start, final PathGraphNode goal, final PathGraphNode[][] map) {
         open.add(start);
-        return super.run(start, goal);
+        this.goal = goal;
+        this.start = start;
+        this.map = map;
     }
 
-    public void init(final PathGraphNode start, final PathGraphNode goal) {
-        open.add(start);
-        super.goal = goal;
-    }
 
-
-    @Override
     public boolean update(final Set<PathGraphNode> nodesToVisualize) {
         PathGraphNode current = open.get(0);
-        final PathGraphNode goal = super.goal;
 
         double currentEstimate = heuristic(current, goal);
         for (final PathGraphNode node : open) {
@@ -45,8 +43,7 @@ public class BestFirstSearch extends SearchAlgorithms {
         nodesToVisualize.add(current);
         closed.add(current);
         if (goal.equals(current)) {
-            System.out.println("path found");
-            found = true;
+            markPath(start, goal);
             return true;
         } else {
             final List<PathGraphNode> toAdd = current.getNeighbors(map);
@@ -61,15 +58,18 @@ public class BestFirstSearch extends SearchAlgorithms {
 
             }
         }
-        if (open.isEmpty()) {
-            found = false;
-            return true;
-        }
-        return false;
+        return open.isEmpty();
     }
 
     private double heuristic(final PathGraphNode node, final PathGraphNode endNode) {
         return Math.abs(endNode.getX() - node.getX()) + Math.abs(endNode.getY() - node.getY());
     }
 
+    private void markPath(final PathGraphNode start, final PathGraphNode goal) {
+        PathGraphNode currentNode = goal;
+        while (!currentNode.equals(start)) {
+            currentNode.setState(NodeState.PATH);
+            currentNode = currentNode.getParent();
+        }
+    }
 }
