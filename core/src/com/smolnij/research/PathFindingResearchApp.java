@@ -26,7 +26,7 @@ import static com.smolnij.research.scene.MazeRenderer.*;
 public class PathFindingResearchApp extends ApplicationAdapter {
     public static final int VIRTUAL_WIDTH = MAP_WIDTH * TILE_WIDTH;
     public static final int VIRTUAL_HEIGHT = MAP_HEIGHT * TILE_HEIGHT;
-    public static final int PANEL_HEIGHT = 100;
+    public static final int PANEL_HEIGHT = 150;
 
     private static final int START_X = 10;
     private static final int START_Y = 15;

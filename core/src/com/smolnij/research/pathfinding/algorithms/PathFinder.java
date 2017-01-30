@@ -4,10 +4,10 @@ import com.smolnij.research.pathfinding.Node;
 
 import java.util.Set;
 
-public abstract class PathFinder {
+public abstract class PathFinder<T extends PathGraphNode> {
 
-    protected PathGraphNode start;
-    protected PathGraphNode goal;
+    protected T start;
+    protected T goal;
 
     public abstract void init(final Node start, final Node goal, final Node[][] graph);
 

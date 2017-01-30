@@ -3,9 +3,9 @@ package com.smolnij.research.scene;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.smolnij.research.layout.AtlasHelper;
 import com.smolnij.research.pathfinding.Node;
+import com.smolnij.research.pathfinding.algorithms.AStarPathFinder;
 import com.smolnij.research.pathfinding.algorithms.PathFinder;
 import com.smolnij.research.pathfinding.algorithms.PathGraphNode;
-import com.smolnij.research.pathfinding.astar.AStarPathFinder;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -28,6 +28,7 @@ public class PathRenderer {
 
     public void findPath() {
         bestFirstSearch = new AStarPathFinder();
+//        bestFirstSearch = new BestFirstPathFinder();
         bestFirstSearch.init(start, end, mazeRenderer.getMaze());
         pathFindingStarted = true;
     }

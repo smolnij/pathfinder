@@ -2,16 +2,17 @@ package com.smolnij.research.pathfinding.algorithms;
 
 
 import com.smolnij.research.pathfinding.Node;
-import com.smolnij.research.pathfinding.heuristic.GreedyNodeComparator;
+import com.smolnij.research.pathfinding.heuristic.AStarNodeComparator;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Set;
 
-public class BestFirstPathFinder extends PathFinder<PathGraphNode> {
+public class AStarPathFinder extends PathFinder<PathGraphNode> {
     private final LinkedList<PathGraphNode> closed = new LinkedList<>();
     private PriorityQueue<PathGraphNode> open;
+
     private PathGraphNode[][] mazeGraph;
 
     @Override
@@ -19,7 +20,7 @@ public class BestFirstPathFinder extends PathFinder<PathGraphNode> {
         closed.clear();
         this.mazeGraph = buildGraph(maze);
 
-        open = new PriorityQueue<>(new GreedyNodeComparator<>(goal));
+        open = new PriorityQueue<>(new AStarNodeComparator<>(start, goal));
 
         final PathGraphNode startGraphNode = mazeGraph[start.getX()][start.getY()];
         open.add(startGraphNode);

@@ -1,8 +1,6 @@
 package com.smolnij.research.pathfinding;
 
 
-import com.smolnij.research.pathfinding.algorithms.NodeState;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,8 +9,6 @@ public class Node implements GridCoordinatesAware {
     private final int x;
     private final int y;
     private final boolean blocked;
-    private NodeState state;
-
 
     private Node pathParent;
 
@@ -112,13 +108,5 @@ public class Node implements GridCoordinatesAware {
 
     public boolean isBlocked() {
         return blocked;
-    }
-
-    public NodeState getState() {
-        return state;
-    }
-
-    public void setState(final NodeState state) {
-        this.state = state;
     }
 }

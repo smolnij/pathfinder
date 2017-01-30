@@ -22,10 +22,12 @@ public class ControlPanel extends Stage {
         table.add(createMazeGeneratorButton(mazeRenderer)).pad(5);
         table.add(createDrawWallsButton(mazeRenderer, pathRenderer)).pad(5);
         table.add(createRemoveWallButton(mazeRenderer)).pad(5);
-        table.add(createFindPathButton(pathRenderer)).pad(5);
+
         table.row();
         table.add(createClearWallButton(mazeRenderer)).pad(5);
         table.add(createClearPathsButton(pathRenderer)).pad(5);
+        table.row();
+        table.add(createFindPathButton(pathRenderer)).pad(5);
 
         addActor(table);
 
