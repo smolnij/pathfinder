@@ -6,6 +6,7 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.smolnij.research.layout.AtlasHelper;
 import com.smolnij.research.maze.MazeGenerator;
@@ -24,14 +25,16 @@ public class MazeRenderer implements InputProcessor {
     private final SpriteBatch batch;
     private final OrthographicCamera camera;
     private final Vector3 touchPoint = new Vector3(-1, -1, -1);
-    private final Vector3 wallCursorCoords = new Vector3();
+    private final Vector3 currentCursorCoords = new Vector3();
     private final TiledMapPoint startPoint;
     private final TiledMapPoint targetPoint;
+    private Vector2 lastTouchPoint = new Vector2(-1, -1);
     private Node[][] maze;
     private boolean dragging;
-    private TextureRegion cursor;
-    private boolean blockCell;
+    private boolean removeWall;
     private MazeGenerator mazeGenerator;
+    private final TextureRegion drawWallCursor = AtlasHelper.INSTANCE.findRegion("draw-wall-cursor");
+    private final TextureRegion removeWallCursor = AtlasHelper.INSTANCE.findRegion("remove-wall-cursor");
 
     public MazeRenderer(final SpriteBatch batch, final OrthographicCamera camera,
                         final TiledMapPoint startPoint,
@@ -42,25 +45,6 @@ public class MazeRenderer implements InputProcessor {
         this.targetPoint = targetPoint;
         this.maze = maze;
         mazeGenerator = new MazeGenerator(MAP_WIDTH, MAP_HEIGHT);
-        toWaitingState();
-    }
-
-    public void toWaitingState() {
-        cursor = null;
-    }
-
-    private boolean isWaitingState() {
-        return cursor == null;
-    }
-
-    public void toDrawWallsState() {
-        cursor = AtlasHelper.INSTANCE.findRegion("draw-wall-cursor");
-        blockCell = true;
-    }
-
-    public void toRemoveWallsState() {
-        cursor = AtlasHelper.INSTANCE.findRegion("remove-wall-cursor");
-        blockCell = false;
     }
 
     public void render() {
@@ -68,12 +52,19 @@ public class MazeRenderer implements InputProcessor {
         batch.begin();
         drawMaze();
 
-        screenToMapXY(Gdx.input.getX(), Gdx.input.getY(), wallCursorCoords);
-        if (!isWaitingState()) {
-            batch.draw(cursor, (float) (Math.floor(wallCursorCoords.x)), (float) (Math.floor(wallCursorCoords.y)), 1, 1);
+        screenToMapXY(Gdx.input.getX(), Gdx.input.getY(), currentCursorCoords);
+        if (beyondMazeBoundaries((int) currentCursorCoords.x, (int) currentCursorCoords.y)) {
+            batch.end();
+            return;
         }
+        final boolean cursorOverWall = maze[(int) currentCursorCoords.x][(int) currentCursorCoords.y].isBlocked();
 
 
+        if (dragging) {
+            batch.draw(cursorOverWall ? drawWallCursor : removeWallCursor, (float) (Math.floor(currentCursorCoords.x)), (float) (Math.floor(currentCursorCoords.y)), 1, 1);
+        } else {
+            batch.draw(cursorOverWall ? removeWallCursor : drawWallCursor, (float) (Math.floor(currentCursorCoords.x)), (float) (Math.floor(currentCursorCoords.y)), 1, 1);
+        }
         batch.end();
     }
 
@@ -112,16 +103,24 @@ public class MazeRenderer implements InputProcessor {
     private void editWallSegment(final Vector3 touchPoint) {
         final int x = (int) touchPoint.x;
         final int y = (int) touchPoint.y;
+        if ((int) lastTouchPoint.x == x && (int) lastTouchPoint.y == y) {
+            return;
+        }
+
         if (isStartPoint(x, y) || isTargetPoint(x, y)) {
             return;
         }
 
-        if (x < 0 || x > maze.length - 1 || y < 0 || y > maze[0].length - 1) {
+        if (beyondMazeBoundaries(x, y)) {
             return;
         }
+        maze[x][y] = new Node(x, y, !removeWall);
+        lastTouchPoint.x = x;
+        lastTouchPoint.y = y;
+    }
 
-        maze[x][y] = new Node(x, y, blockCell);
-
+    private boolean beyondMazeBoundaries(int x, int y) {
+        return x < 0 || x >= maze.length || y < 0 || y >= maze[0].length;
     }
 
     private boolean isTargetPoint(int x, int y) {
@@ -151,6 +150,12 @@ public class MazeRenderer implements InputProcessor {
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         if (button != Input.Buttons.LEFT || pointer > 0) return false;
         screenToMapXY(screenX, screenY, touchPoint);
+        if (beyondMazeBoundaries((int) touchPoint.x, (int) touchPoint.y)) {
+            return false;
+        }
+
+        final Node currentCell = maze[(int) touchPoint.x][(int) touchPoint.y];
+        removeWall = currentCell.isBlocked();
         editWallSegment(touchPoint);
         dragging = true;
         return true;

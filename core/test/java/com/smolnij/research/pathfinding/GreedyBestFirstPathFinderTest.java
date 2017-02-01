@@ -4,7 +4,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertTrue;
 
-public class GreedyBestFirstPathFinderTest {
+public class GreedyBestFirstPathFinderTest { //todo drop
 
     @Test
     public void thisAlwaysPasses() {

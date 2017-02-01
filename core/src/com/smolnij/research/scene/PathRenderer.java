@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.smolnij.research.layout.AtlasHelper;
 import com.smolnij.research.pathfinding.Node;
 import com.smolnij.research.pathfinding.algorithms.AStarPathFinder;
+import com.smolnij.research.pathfinding.algorithms.BestFirstPathFinder;
 import com.smolnij.research.pathfinding.algorithms.PathFinder;
 import com.smolnij.research.pathfinding.algorithms.PathGraphNode;
 
@@ -18,7 +19,7 @@ public class PathRenderer {
     private final Node end;
     private boolean pathFindingStarted = false;
     private final MazeRenderer mazeRenderer;
-    private PathFinder bestFirstSearch;
+    private PathFinder pathFinder;
 
     public PathRenderer(final MazeRenderer mazeRenderer, final TiledMapPoint start, final TiledMapPoint end) {
         this.mazeRenderer = mazeRenderer;
@@ -26,10 +27,15 @@ public class PathRenderer {
         this.end = mazeRenderer.getMaze()[end.x][end.y];
     }
 
-    public void findPath() {
-        bestFirstSearch = new AStarPathFinder();
-//        bestFirstSearch = new BestFirstPathFinder();
-        bestFirstSearch.init(start, end, mazeRenderer.getMaze());
+    public void findPathAStar() {
+        pathFinder = new AStarPathFinder();
+        pathFinder.init(start, end, mazeRenderer.getMaze());
+        pathFindingStarted = true;
+    }
+
+    public void findPathGreedyBestFirst() {
+        pathFinder = new BestFirstPathFinder();
+        pathFinder.init(start, end, mazeRenderer.getMaze());
         pathFindingStarted = true;
     }
 
@@ -39,7 +45,7 @@ public class PathRenderer {
         boolean finished = false;
         if (pathFindingStarted) { //GWT has no support for standard multithreading, hence the refresh rate used
             for (int i = 0; !finished && i < PATH_RENDERING_REFRESH_RATE; i++) {
-                finished = bestFirstSearch.update(progress);
+                finished = pathFinder.update(progress);
                 pathFindingStarted = !finished;
             }
         }

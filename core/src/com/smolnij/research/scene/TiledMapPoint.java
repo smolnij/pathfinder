@@ -1,7 +1,7 @@
 package com.smolnij.research.scene;
 
 
-public class TiledMapPoint {
+public class TiledMapPoint { //todo get rid/unificate with pathnodegraph
     public int x;
     public int y;
 

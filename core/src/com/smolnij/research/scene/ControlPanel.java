@@ -4,12 +4,11 @@ package com.smolnij.research.scene;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.smolnij.research.layout.AtlasHelper;
+import com.smolnij.research.layout.SkinHolder;
 
 public class ControlPanel extends Stage {
 
@@ -20,14 +19,26 @@ public class ControlPanel extends Stage {
         table.setFillParent(true);
 
         table.add(createMazeGeneratorButton(mazeRenderer)).pad(5);
-        table.add(createDrawWallsButton(mazeRenderer, pathRenderer)).pad(5);
-        table.add(createRemoveWallButton(mazeRenderer)).pad(5);
 
         table.row();
         table.add(createClearWallButton(mazeRenderer)).pad(5);
         table.add(createClearPathsButton(pathRenderer)).pad(5);
         table.row();
-        table.add(createFindPathButton(pathRenderer)).pad(5);
+
+        final Button findPathAStarButton = createFindPathWithAStarButton(pathRenderer);
+        final Button findPathBestFirstButton = createFindPathWithBestFirstButton(pathRenderer);
+
+        final ButtonGroup<Button> pathfindingBtnGroup = new ButtonGroup<>(findPathAStarButton, findPathBestFirstButton);
+        pathfindingBtnGroup.setMaxCheckCount(1);
+        pathfindingBtnGroup.setMinCheckCount(1);
+        pathfindingBtnGroup.setUncheckLast(true);
+
+        table.add(findPathAStarButton).pad(5);
+        table.add(findPathBestFirstButton).pad(5);
+
+        final CheckBox cb = new CheckBox("Manhattan", SkinHolder.INSTANCE.getAppSkin());
+
+        table.add(cb).pad(5);
 
         addActor(table);
 
@@ -69,41 +80,30 @@ public class ControlPanel extends Stage {
         return clearWallsBtn;
     }
 
-    private Button createFindPathButton(final PathRenderer pathRenderer) {
+    private Button createFindPathWithAStarButton(final PathRenderer pathRenderer) {
         final Button findPath = createImageButton("find-path-btn");
+        //todo lambda
         findPath.addListener(new ClickListener() {
             @Override
             public boolean touchDown(final InputEvent event, final float x, final float y, final int pointer, final int button) {
-                pathRenderer.findPath();
+                pathRenderer.findPathAStar();
                 return true;
             }
         });
         return findPath;
     }
 
-    private Button createRemoveWallButton(final MazeRenderer mazeRenderer) {
-        final Button removeWall = createImageButton("remove-wall-btn");
-        removeWall.addListener(new ClickListener() {
+    private Button createFindPathWithBestFirstButton(final PathRenderer pathRenderer) {
+        final Button findPath = createImageButton("find-path-btn");
+        //todo lambda
+        findPath.addListener(new ClickListener() {
             @Override
             public boolean touchDown(final InputEvent event, final float x, final float y, final int pointer, final int button) {
-                mazeRenderer.toRemoveWallsState();
+                pathRenderer.findPathGreedyBestFirst();
                 return true;
             }
         });
-        return removeWall;
-    }
-
-    private Button createDrawWallsButton(final MazeRenderer mazeRenderer, final PathRenderer pathRenderer) {
-        final Button drawWalls = createImageButton("draw-walls-btn");
-        drawWalls.addListener(new ClickListener() {
-            @Override
-            public boolean touchDown(final InputEvent event, final float x, final float y, final int pointer, final int button) {
-                pathRenderer.clearPaths();
-                mazeRenderer.toDrawWallsState();
-                return true;
-            }
-        });
-        return drawWalls;
+        return findPath;
     }
 
     private Button createImageButton(final String buttonTextureName) {

@@ -4,170 +4,142 @@ size: 1024,128
 format: RGBA4444
 filter: Linear,Linear
 repeat: none
-candidate_under_inspection
+checkbox-checked
   rotate: false
-  xy: 719, 68
-  size: 16, 16
-  orig: 16, 16
+  xy: 485, 94
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+checkbox-unchecked
+  rotate: false
+  xy: 519, 94
+  size: 32, 32
+  orig: 32, 32
   offset: 0, 0
   index: -1
 clear-all-btn
   rotate: false
-  xy: 700, 2
+  xy: 351, 44
   size: 123, 40
   orig: 123, 40
   offset: 0, 0
   index: -1
 clear-all-btn-down
   rotate: false
-  xy: 719, 86
+  xy: 444, 2
   size: 123, 40
   orig: 123, 40
   offset: 0, 0
   index: -1
 clear-paths-btn
   rotate: false
-  xy: 392, 2
+  xy: 2, 2
   size: 152, 40
   orig: 152, 40
   offset: 0, 0
   index: -1
 clear-paths-btn-down
   rotate: false
-  xy: 431, 86
+  xy: 156, 2
   size: 152, 40
   orig: 152, 40
   offset: 0, 0
   index: -1
 clear-walls-btn
   rotate: false
-  xy: 431, 44
+  xy: 197, 86
   size: 152, 40
   orig: 152, 40
   offset: 0, 0
   index: -1
 clear-walls-btn-down
   rotate: false
-  xy: 546, 2
+  xy: 197, 44
   size: 152, 40
   orig: 152, 40
   offset: 0, 0
   index: -1
 draw-wall-cursor
   rotate: false
-  xy: 844, 110
+  xy: 553, 110
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-draw-walls-btn
-  rotate: false
-  xy: 2, 86
-  size: 254, 40
-  orig: 254, 40
-  offset: 0, 0
-  index: -1
-draw-walls-btn-down
-  rotate: false
-  xy: 2, 44
-  size: 254, 40
-  orig: 254, 40
-  offset: 0, 0
-  index: -1
 find-path-btn
   rotate: false
-  xy: 585, 86
+  xy: 310, 2
   size: 132, 40
   orig: 132, 40
   offset: 0, 0
   index: -1
 find-path-btn-down
   rotate: false
-  xy: 585, 44
+  xy: 351, 86
   size: 132, 40
   orig: 132, 40
   offset: 0, 0
   index: -1
 generate-maze-btn
   rotate: false
-  xy: 2, 2
+  xy: 2, 86
   size: 193, 40
   orig: 193, 40
   offset: 0, 0
   index: -1
 generate-maze-btn-down
   rotate: false
-  xy: 197, 2
+  xy: 2, 44
   size: 193, 40
   orig: 193, 40
   offset: 0, 0
   index: -1
 inspected
   rotate: false
-  xy: 719, 50
+  xy: 571, 110
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 inspected_candidate
   rotate: false
-  xy: 737, 68
+  xy: 589, 110
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 path
   rotate: false
-  xy: 844, 92
+  xy: 607, 110
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-remove-wall-btn
-  rotate: false
-  xy: 258, 86
-  size: 171, 40
-  orig: 171, 40
-  offset: 0, 0
-  index: -1
-remove-wall-btn-down
-  rotate: false
-  xy: 258, 44
-  size: 171, 40
-  orig: 171, 40
-  offset: 0, 0
-  index: -1
 remove-wall-cursor
   rotate: false
-  xy: 862, 110
+  xy: 625, 110
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 start
   rotate: false
-  xy: 737, 50
+  xy: 643, 110
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 target
   rotate: false
-  xy: 755, 68
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-under_inspection
-  rotate: false
-  xy: 862, 92
+  xy: 661, 110
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 wall
   rotate: false
-  xy: 880, 110
+  xy: 679, 110
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
