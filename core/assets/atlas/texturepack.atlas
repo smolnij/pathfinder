@@ -1,35 +1,21 @@
 
 texturepack.png
-size: 1024,128
+size: 512,128
 format: RGBA4444
 filter: Linear,Linear
 repeat: none
 checkbox-checked
   rotate: false
-  xy: 485, 94
+  xy: 351, 52
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 checkbox-unchecked
   rotate: false
-  xy: 519, 94
+  xy: 385, 52
   size: 32, 32
   orig: 32, 32
-  offset: 0, 0
-  index: -1
-clear-all-btn
-  rotate: false
-  xy: 351, 44
-  size: 123, 40
-  orig: 123, 40
-  offset: 0, 0
-  index: -1
-clear-all-btn-down
-  rotate: false
-  xy: 444, 2
-  size: 123, 40
-  orig: 123, 40
   offset: 0, 0
   index: -1
 clear-paths-btn
@@ -62,7 +48,7 @@ clear-walls-btn-down
   index: -1
 draw-wall-cursor
   rotate: false
-  xy: 553, 110
+  xy: 485, 110
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
@@ -97,49 +83,49 @@ generate-maze-btn-down
   index: -1
 inspected
   rotate: false
-  xy: 571, 110
+  xy: 419, 68
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 inspected_candidate
   rotate: false
-  xy: 589, 110
+  xy: 485, 92
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 path
   rotate: false
-  xy: 607, 110
+  xy: 437, 68
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 remove-wall-cursor
   rotate: false
-  xy: 625, 110
+  xy: 455, 68
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 start
   rotate: false
-  xy: 643, 110
+  xy: 419, 50
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 target
   rotate: false
-  xy: 661, 110
+  xy: 437, 50
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 wall
   rotate: false
-  xy: 679, 110
+  xy: 455, 50
   size: 16, 16
   orig: 16, 16
   offset: 0, 0

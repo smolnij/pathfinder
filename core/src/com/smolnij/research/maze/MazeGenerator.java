@@ -34,7 +34,7 @@ public class MazeGenerator {
 
 
     public void generateMaze(final int startX, final int startY, final int endX, final int endY) {
-        init();
+        init(); //todo make end never blocked
         final MazeCell startAt = getCell(startX / 4, startY / 2);
         startAt.open = false;
 
