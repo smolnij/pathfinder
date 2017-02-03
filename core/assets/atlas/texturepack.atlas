@@ -6,126 +6,126 @@ filter: Linear,Linear
 repeat: none
 checkbox-checked
   rotate: false
-  xy: 351, 52
+  xy: 390, 52
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 checkbox-unchecked
   rotate: false
-  xy: 385, 52
+  xy: 467, 94
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-clear-paths-btn
+clear-path-btn
   rotate: false
-  xy: 2, 2
-  size: 152, 40
-  orig: 152, 40
+  xy: 224, 86
+  size: 164, 40
+  orig: 164, 40
   offset: 0, 0
   index: -1
-clear-paths-btn-down
+clear-path-btn-down
   rotate: false
-  xy: 156, 2
-  size: 152, 40
-  orig: 152, 40
+  xy: 224, 44
+  size: 164, 40
+  orig: 164, 40
   offset: 0, 0
   index: -1
 clear-walls-btn
   rotate: false
-  xy: 197, 86
-  size: 152, 40
-  orig: 152, 40
+  xy: 2, 2
+  size: 176, 40
+  orig: 176, 40
   offset: 0, 0
   index: -1
 clear-walls-btn-down
   rotate: false
-  xy: 197, 44
-  size: 152, 40
-  orig: 152, 40
+  xy: 180, 2
+  size: 176, 40
+  orig: 176, 40
   offset: 0, 0
   index: -1
 draw-wall-cursor
   rotate: false
-  xy: 485, 110
+  xy: 424, 68
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 find-path-btn
   rotate: false
-  xy: 310, 2
-  size: 132, 40
-  orig: 132, 40
+  xy: 358, 2
+  size: 75, 40
+  orig: 75, 40
   offset: 0, 0
   index: -1
 find-path-btn-down
   rotate: false
-  xy: 351, 86
-  size: 132, 40
-  orig: 132, 40
+  xy: 390, 86
+  size: 75, 40
+  orig: 75, 40
   offset: 0, 0
   index: -1
 generate-maze-btn
   rotate: false
   xy: 2, 86
-  size: 193, 40
-  orig: 193, 40
+  size: 220, 40
+  orig: 220, 40
   offset: 0, 0
   index: -1
 generate-maze-btn-down
   rotate: false
   xy: 2, 44
-  size: 193, 40
-  orig: 193, 40
+  size: 220, 40
+  orig: 220, 40
   offset: 0, 0
   index: -1
 inspected
   rotate: false
-  xy: 419, 68
+  xy: 442, 68
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 inspected_candidate
   rotate: false
-  xy: 485, 92
+  xy: 424, 50
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 path
   rotate: false
-  xy: 437, 68
+  xy: 442, 50
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 remove-wall-cursor
   rotate: false
-  xy: 455, 68
+  xy: 435, 32
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 start
   rotate: false
-  xy: 419, 50
+  xy: 435, 14
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 target
   rotate: false
-  xy: 437, 50
+  xy: 467, 76
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 wall
   rotate: false
-  xy: 455, 50
+  xy: 485, 76
   size: 16, 16
   orig: 16, 16
   offset: 0, 0

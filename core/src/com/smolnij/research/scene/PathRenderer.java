@@ -60,7 +60,7 @@ public class PathRenderer {
         batch.end();
     }
 
-    public void clearPaths() {
+    public void clearPath() {
         progress.clear();
     }
 }

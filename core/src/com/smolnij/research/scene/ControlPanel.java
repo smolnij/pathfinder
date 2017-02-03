@@ -12,6 +12,13 @@ import com.smolnij.research.layout.SkinHolder;
 
 public class ControlPanel extends Stage {
 
+    private static final String BREADTH_FIRST = "Breadth First";
+    private static final String GREEDY_BEST_FIRST = "Greedy Best First";
+    private static final String A_STAR = "A*";
+    private static final String MANHATTAN = "Manhattan";
+    private static final String CHEBYSHEV = "Chebyshev";
+    private static final String EUCLIDIAN = "Euclidian";
+
     public ControlPanel(final Viewport viewport, final SpriteBatch sb, final MazeRenderer mazeRenderer, final PathRenderer pathRenderer) {
         super(viewport, sb);
         final Table table = new Table();
@@ -20,6 +27,11 @@ public class ControlPanel extends Stage {
 
         addAlgorithmButtons(table);
         addHeuristicButtons(table);
+
+        final Button findPathWithAStarButton = createFindPathWithAStarButton(pathRenderer);
+        findPathWithAStarButton.left();
+        table.add(findPathWithAStarButton).expandX().left();
+
         addHelperButtons(mazeRenderer, pathRenderer, table);
 
         addActor(table);
@@ -29,53 +41,35 @@ public class ControlPanel extends Stage {
         final VerticalGroup helperButtonsGroup = new VerticalGroup();
         final Button mazeGeneratorButton = createMazeGeneratorButton(mazeRenderer);
         mazeGeneratorButton.left();
+        mazeGeneratorButton.pad(3);
         helperButtonsGroup.addActor(mazeGeneratorButton);
 
         final Button clearWallsButton = createClearWallsButton(mazeRenderer);
         clearWallsButton.left();
+        clearWallsButton.pad(3);
         helperButtonsGroup.addActor(clearWallsButton);
 
-        final Button clearPathsButton = createClearPathsButton(pathRenderer);
-        clearPathsButton.left();
-        helperButtonsGroup.addActor(clearPathsButton);
-        helperButtonsGroup.fill().left();
+        final Button clearPathButton = createClearPathButton(pathRenderer);
+        clearPathButton.left();
+        clearPathButton.pad(3);
+        helperButtonsGroup.addActor(clearPathButton);
+        helperButtonsGroup.fill().left().pad(5);
         table.add(helperButtonsGroup);
     }
 
     private void addHeuristicButtons(final Table table) {
-        final CheckBox manhattan = new CheckBox("Manhattan", SkinHolder.INSTANCE.getAppSkin());
+        final CheckBox manhattan = new CheckBox(MANHATTAN, SkinHolder.INSTANCE.getAppSkin());
         manhattan.left();
-        final CheckBox chebyshev = new CheckBox("Chebyshev", SkinHolder.INSTANCE.getAppSkin());
+        final CheckBox chebyshev = new CheckBox(CHEBYSHEV, SkinHolder.INSTANCE.getAppSkin());
         chebyshev.left();
-        final CheckBox euclidian = new CheckBox("Euclidian", SkinHolder.INSTANCE.getAppSkin());
+        final CheckBox euclidian = new CheckBox(EUCLIDIAN, SkinHolder.INSTANCE.getAppSkin());
         euclidian.left();
 
         final ButtonGroup<Button> heuristicGroup = new ButtonGroup<>(manhattan, chebyshev, euclidian);
         heuristicGroup.setMaxCheckCount(1);
         heuristicGroup.setMinCheckCount(1);
         heuristicGroup.setUncheckLast(true);
-
-        final VerticalGroup heuristicVerticalGroup = new VerticalGroup();
-
-        heuristicVerticalGroup.addActor(manhattan);
-        heuristicVerticalGroup.addActor(chebyshev);
-        heuristicVerticalGroup.addActor(euclidian);
-        heuristicVerticalGroup.fill().left().pad(5);
-        table.add(heuristicVerticalGroup);
-    }
-
-    private void addAlgorithmButtons(final Table table) {
-        final CheckBox manhattan = new CheckBox("Breadth First", SkinHolder.INSTANCE.getAppSkin());
-        manhattan.left();
-        final CheckBox chebyshev = new CheckBox("Greedy Best First", SkinHolder.INSTANCE.getAppSkin());
-        chebyshev.left();
-        final CheckBox euclidian = new CheckBox("A*", SkinHolder.INSTANCE.getAppSkin());
-        euclidian.left();
-
-        final ButtonGroup<Button> heuristicGroup = new ButtonGroup<>(manhattan, chebyshev, euclidian);
-        heuristicGroup.setMaxCheckCount(1);
-        heuristicGroup.setMinCheckCount(1);
-        heuristicGroup.setUncheckLast(true);
+        heuristicGroup.setChecked(MANHATTAN);
 
         final VerticalGroup heuristicVerticalGroup = new VerticalGroup();
 
@@ -84,6 +78,29 @@ public class ControlPanel extends Stage {
         heuristicVerticalGroup.addActor(euclidian);
         heuristicVerticalGroup.fill().left().pad(5);
         table.add(heuristicVerticalGroup).expandX().left();
+    }
+
+    private void addAlgorithmButtons(final Table table) {
+        final CheckBox manhattan = new CheckBox(BREADTH_FIRST, SkinHolder.INSTANCE.getAppSkin());
+        manhattan.left();
+        final CheckBox chebyshev = new CheckBox(GREEDY_BEST_FIRST, SkinHolder.INSTANCE.getAppSkin());
+        chebyshev.left();
+        final CheckBox euclidian = new CheckBox(A_STAR, SkinHolder.INSTANCE.getAppSkin());
+        euclidian.left();
+
+        final ButtonGroup<Button> heuristicGroup = new ButtonGroup<>(manhattan, chebyshev, euclidian);
+        heuristicGroup.setMaxCheckCount(1);
+        heuristicGroup.setMinCheckCount(1);
+        heuristicGroup.setUncheckLast(true);
+        heuristicGroup.setChecked(BREADTH_FIRST);
+
+        final VerticalGroup heuristicVerticalGroup = new VerticalGroup();
+
+        heuristicVerticalGroup.addActor(manhattan);
+        heuristicVerticalGroup.addActor(chebyshev);
+        heuristicVerticalGroup.addActor(euclidian);
+        heuristicVerticalGroup.fill().left();
+        table.add(heuristicVerticalGroup).left();
     }
 
     private Button createMazeGeneratorButton(final MazeRenderer mazeRenderer) {
@@ -98,12 +115,12 @@ public class ControlPanel extends Stage {
         return generateMazeBtn;
     }
 
-    private Button createClearPathsButton(final PathRenderer pathRenderer) {
-        final Button clearWallsBtn = createImageButton("clear-paths-btn");
+    private Button createClearPathButton(final PathRenderer pathRenderer) {
+        final Button clearWallsBtn = createImageButton("clear-path-btn");
         clearWallsBtn.addListener(new ClickListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                pathRenderer.clearPaths();
+                pathRenderer.clearPath();
                 return true;
             }
         });
