@@ -2,7 +2,8 @@ package com.smolnij.research.scene;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.smolnij.research.layout.AtlasHelper;
-import com.smolnij.research.pathfinding.MapNode;
+import com.smolnij.research.map.MapNode;
+import com.smolnij.research.map.TiledMapPoint;
 import com.smolnij.research.pathfinding.algorithms.BestFirstPathFinder;
 import com.smolnij.research.pathfinding.algorithms.PathFinder;
 import com.smolnij.research.pathfinding.graph.StatefulGraphMapNode;

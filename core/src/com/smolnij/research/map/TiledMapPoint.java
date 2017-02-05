@@ -1,9 +1,9 @@
-package com.smolnij.research.scene;
+package com.smolnij.research.map;
 
 
 import com.smolnij.research.pathfinding.GridCoordinatesAware;
 
-public class TiledMapPoint implements GridCoordinatesAware { //todo get rid/unificate with pathnodegraph
+public class TiledMapPoint implements GridCoordinatesAware {
     public int x;
     public int y;
 

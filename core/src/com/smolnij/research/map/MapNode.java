@@ -1,15 +1,12 @@
-package com.smolnij.research.pathfinding;
+package com.smolnij.research.map;
 
 
-public class MapNode implements GridCoordinatesAware {
+public class MapNode extends TiledMapPoint {
 
-    private final int x;
-    private final int y;
     private final boolean blocked;
 
     public MapNode(final int x, final int y, final boolean blocked) {
-        this.x = x;
-        this.y = y;
+        super(x, y);
         this.blocked = blocked;
     }
 
@@ -34,16 +31,6 @@ public class MapNode implements GridCoordinatesAware {
         result = 31 * result + y;
         result = 31 * result + (blocked ? 1 : 0);
         return result;
-    }
-
-    @Override
-    public int getX() {
-        return x;
-    }
-
-    @Override
-    public int getY() {
-        return y;
     }
 
     public boolean isBlocked() {

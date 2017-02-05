@@ -1,6 +1,6 @@
 package com.smolnij.research.pathfinding.datastructure;
 
-import com.smolnij.research.pathfinding.MapNode;
+import com.smolnij.research.map.MapNode;
 import com.smolnij.research.pathfinding.graph.StatefulGraphMapNode;
 
 import java.util.ArrayList;

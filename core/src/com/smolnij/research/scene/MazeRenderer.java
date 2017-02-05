@@ -9,8 +9,9 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.smolnij.research.layout.AtlasHelper;
+import com.smolnij.research.map.MapNode;
+import com.smolnij.research.map.TiledMapPoint;
 import com.smolnij.research.maze.MazeGenerator;
-import com.smolnij.research.pathfinding.MapNode;
 
 import static com.smolnij.research.PathFindingResearchApp.PANEL_HEIGHT;
 import static com.smolnij.research.PathFindingResearchApp.VIRTUAL_HEIGHT;

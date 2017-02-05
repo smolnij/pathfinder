@@ -15,11 +15,11 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthoCachedTiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.smolnij.research.layout.AtlasHelper;
-import com.smolnij.research.pathfinding.MapNode;
+import com.smolnij.research.map.MapNode;
+import com.smolnij.research.map.TiledMapPoint;
 import com.smolnij.research.scene.ControlPanel;
 import com.smolnij.research.scene.MazeRenderer;
 import com.smolnij.research.scene.PathRenderer;
-import com.smolnij.research.scene.TiledMapPoint;
 
 import static com.smolnij.research.scene.MazeRenderer.*;
 

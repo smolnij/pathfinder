@@ -3,12 +3,12 @@ package com.smolnij.research.maze;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MazeCell {
+public class MazeCell {//todo uniy this with nodes structure
     public final int x;
     public final int y;
     public final boolean wall;
     public boolean open = true;
-    List<MazeCell> neighbors = new ArrayList<>();
+    private List<MazeCell> neighbors = new ArrayList<>();
 
     public MazeCell(int x, int y, boolean wall) {
         this.x = x;

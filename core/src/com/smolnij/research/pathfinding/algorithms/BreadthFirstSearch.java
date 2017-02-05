@@ -1,7 +1,7 @@
 package com.smolnij.research.pathfinding.algorithms;
 
 
-import com.smolnij.research.pathfinding.MapNode;
+import com.smolnij.research.map.MapNode;
 
 import java.util.Set;
 

@@ -1,6 +1,6 @@
 package com.smolnij.research.maze;
 
-import com.smolnij.research.pathfinding.MapNode;
+import com.smolnij.research.map.MapNode;
 
 import java.util.ArrayList;
 import java.util.List;

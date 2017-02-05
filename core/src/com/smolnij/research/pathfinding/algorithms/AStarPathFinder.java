@@ -2,7 +2,7 @@ package com.smolnij.research.pathfinding.algorithms;
 
 
 import com.badlogic.gdx.ai.pfa.Heuristic;
-import com.smolnij.research.pathfinding.MapNode;
+import com.smolnij.research.map.MapNode;
 import com.smolnij.research.pathfinding.datastructure.WaypointsGraph;
 import com.smolnij.research.pathfinding.graph.NodeState;
 import com.smolnij.research.pathfinding.graph.StatefulGraphMapNode;
