@@ -14,6 +14,9 @@ import java.util.PriorityQueue;
 import java.util.Set;
 
 public class AStarPathFinder extends PathFinder<StatefulGraphMapNode> {
+
+    public static final String NAME = "A*";
+
     private final List<StatefulGraphMapNode> closed = new ArrayList<>();
     private PriorityQueue<StatefulGraphMapNode> open;
     private WaypointsGraph waypointsGraph;

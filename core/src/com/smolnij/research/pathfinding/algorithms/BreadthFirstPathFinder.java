@@ -2,12 +2,15 @@ package com.smolnij.research.pathfinding.algorithms;
 
 
 import com.smolnij.research.map.MapNode;
+import com.smolnij.research.pathfinding.graph.StatefulGraphMapNode;
 
 import java.util.Set;
 
-public class BreadthFirstSearch extends PathFinder {
+public class BreadthFirstPathFinder extends PathFinder<StatefulGraphMapNode> {
 
-    protected BreadthFirstSearch() {
+    public static final String NAME = "Breadth First";
+
+    public BreadthFirstPathFinder() {
         super(null);
     }
 

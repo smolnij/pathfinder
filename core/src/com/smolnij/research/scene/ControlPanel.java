@@ -9,17 +9,14 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.smolnij.research.layout.AtlasHelper;
 import com.smolnij.research.layout.SkinHolder;
-import com.smolnij.research.pathfinding.algorithms.AStarPathFinder;
-import com.smolnij.research.pathfinding.heuristic.ManhattanDistance;
+import com.smolnij.research.pathfinding.algorithms.*;
+import com.smolnij.research.pathfinding.graph.StatefulGraphMapNode;
+
+import java.util.Arrays;
+
+import static com.smolnij.research.pathfinding.PathfinderByNameResolver.getPathFinderByName;
 
 public class ControlPanel extends Stage {
-
-    private static final String BREADTH_FIRST = "Breadth First";
-    private static final String GREEDY_BEST_FIRST = "Greedy Best First";
-    private static final String A_STAR = "A*";
-    private static final String MANHATTAN = "Manhattan";
-    private static final String CHEBYSHEV = "Chebyshev";
-    private static final String EUCLIDIAN = "Euclidian";
 
     public ControlPanel(final Viewport viewport, final SpriteBatch sb, final MazeRenderer mazeRenderer, final PathRenderer pathRenderer) {
         super(viewport, sb);
@@ -34,7 +31,9 @@ public class ControlPanel extends Stage {
         findPath.addListener(new ClickListener() {
             @Override
             public boolean touchDown(final InputEvent event, final float x, final float y, final int pointer, final int button) {
-                pathRenderer.findPath(new AStarPathFinder(new ManhattanDistance<>()));
+                PathFinder<StatefulGraphMapNode> pathFinder = getPathFinderByName(algorithmButtonGroup.getChecked().getName(),
+                        heuristicButtonGroup.getChecked().getName());
+                pathRenderer.findPath(pathFinder);
                 return true;
             }
         });
@@ -67,14 +66,18 @@ public class ControlPanel extends Stage {
     }
 
     private ButtonGroup<Button> addHeuristicButtons(final Table table) {
-        return addRadioOptionsToTable(table, MANHATTAN, CHEBYSHEV, EUCLIDIAN);
+
+        final String[] heuristicNames = Arrays.stream(ImplementedHeuristics.values())
+                .map(ImplementedHeuristics::getName).toArray(String[]::new);
+
+        return addRadioOptionsToTable(table, heuristicNames);
     }
 
     private ButtonGroup<Button> addAlgorithmButtons(final Table table) {
-        return addRadioOptionsToTable(table, BREADTH_FIRST, GREEDY_BEST_FIRST, A_STAR);
+        return addRadioOptionsToTable(table, BreadthFirstPathFinder.NAME, BestFirstPathFinder.NAME, AStarPathFinder.NAME);
     }
 
-    private ButtonGroup<Button> addRadioOptionsToTable(Table table, String... options) {
+    private ButtonGroup<Button> addRadioOptionsToTable(final Table table, final String... options) {
 
 
         final ButtonGroup<Button> algorithmsGroup = new ButtonGroup<>();

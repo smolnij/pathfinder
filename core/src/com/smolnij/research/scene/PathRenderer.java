@@ -4,10 +4,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.smolnij.research.layout.AtlasHelper;
 import com.smolnij.research.map.MapNode;
 import com.smolnij.research.map.TiledMapPoint;
-import com.smolnij.research.pathfinding.algorithms.BestFirstPathFinder;
 import com.smolnij.research.pathfinding.algorithms.PathFinder;
 import com.smolnij.research.pathfinding.graph.StatefulGraphMapNode;
-import com.smolnij.research.pathfinding.heuristic.ManhattanDistance;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -29,17 +27,11 @@ public class PathRenderer {
     }
 
     public void findPath(final PathFinder pathFinder) {
+        clearPath();
         this.pathFinder = pathFinder;
         this.pathFinder.init(start, end, mazeRenderer.getMaze());
         pathFindingStarted = true;
     }
-
-    public void findPathGreedyBestFirst() {
-        pathFinder = new BestFirstPathFinder(new ManhattanDistance<>());
-        pathFinder.init(start, end, mazeRenderer.getMaze());
-        pathFindingStarted = true;
-    }
-
 
     public void render(final SpriteBatch batch) {
 
