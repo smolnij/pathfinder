@@ -25,12 +25,20 @@ public class ControlPanel extends Stage {
         table.bottom();
         table.setFillParent(true);
 
-        addAlgorithmButtons(table);
-        addHeuristicButtons(table);
+        final ButtonGroup<Button> algorithmButtonGroup = addAlgorithmButtons(table);
+        final ButtonGroup<Button> heuristicButtonGroup = addHeuristicButtons(table);
 
-        final Button findPathWithAStarButton = createFindPathWithAStarButton(pathRenderer);
-        findPathWithAStarButton.left();
-        table.add(findPathWithAStarButton).expandX().left();
+        final Button findPath = createImageButton("find-path-btn");
+        findPath.addListener(new ClickListener() {
+            @Override
+            public boolean touchDown(final InputEvent event, final float x, final float y, final int pointer, final int button) {
+                System.out.println("chosen: " + algorithmButtonGroup.getChecked().getName());
+                pathRenderer.findPathAStar();
+                return true;
+            }
+        });
+        findPath.left();
+        table.add(findPath).expandX();
 
         addHelperButtons(mazeRenderer, pathRenderer, table);
 
@@ -57,50 +65,41 @@ public class ControlPanel extends Stage {
         table.add(helperButtonsGroup);
     }
 
-    private void addHeuristicButtons(final Table table) {
-        final CheckBox manhattan = new CheckBox(MANHATTAN, SkinHolder.INSTANCE.getAppSkin());
-        manhattan.left();
-        final CheckBox chebyshev = new CheckBox(CHEBYSHEV, SkinHolder.INSTANCE.getAppSkin());
-        chebyshev.left();
-        final CheckBox euclidian = new CheckBox(EUCLIDIAN, SkinHolder.INSTANCE.getAppSkin());
-        euclidian.left();
-
-        final ButtonGroup<Button> heuristicGroup = new ButtonGroup<>(manhattan, chebyshev, euclidian);
-        heuristicGroup.setMaxCheckCount(1);
-        heuristicGroup.setMinCheckCount(1);
-        heuristicGroup.setUncheckLast(true);
-        heuristicGroup.setChecked(MANHATTAN);
-
-        final VerticalGroup heuristicVerticalGroup = new VerticalGroup();
-
-        heuristicVerticalGroup.addActor(manhattan);
-        heuristicVerticalGroup.addActor(chebyshev);
-        heuristicVerticalGroup.addActor(euclidian);
-        heuristicVerticalGroup.fill().left().pad(5);
-        table.add(heuristicVerticalGroup).expandX().left();
+    private ButtonGroup<Button> addHeuristicButtons(final Table table) {
+        return addRadioOptionsToTable(table, MANHATTAN, CHEBYSHEV, EUCLIDIAN);
     }
 
-    private void addAlgorithmButtons(final Table table) {
-        final CheckBox manhattan = new CheckBox(BREADTH_FIRST, SkinHolder.INSTANCE.getAppSkin());
-        manhattan.left();
-        final CheckBox chebyshev = new CheckBox(GREEDY_BEST_FIRST, SkinHolder.INSTANCE.getAppSkin());
-        chebyshev.left();
-        final CheckBox euclidian = new CheckBox(A_STAR, SkinHolder.INSTANCE.getAppSkin());
-        euclidian.left();
+    private ButtonGroup<Button> addAlgorithmButtons(final Table table) {
+        return addRadioOptionsToTable(table, BREADTH_FIRST, GREEDY_BEST_FIRST, A_STAR);
+    }
 
-        final ButtonGroup<Button> heuristicGroup = new ButtonGroup<>(manhattan, chebyshev, euclidian);
-        heuristicGroup.setMaxCheckCount(1);
-        heuristicGroup.setMinCheckCount(1);
-        heuristicGroup.setUncheckLast(true);
-        heuristicGroup.setChecked(BREADTH_FIRST);
+    private ButtonGroup<Button> addRadioOptionsToTable(Table table, String... options) {
 
-        final VerticalGroup heuristicVerticalGroup = new VerticalGroup();
 
-        heuristicVerticalGroup.addActor(manhattan);
-        heuristicVerticalGroup.addActor(chebyshev);
-        heuristicVerticalGroup.addActor(euclidian);
-        heuristicVerticalGroup.fill().left();
-        table.add(heuristicVerticalGroup).left();
+        final ButtonGroup<Button> algorithmsGroup = new ButtonGroup<>();
+        final VerticalGroup verticalGroup = new VerticalGroup();
+
+        for (final String option : options) {
+            final CheckBox checkbox = createLeftAlignedCheckbox(option);
+            algorithmsGroup.add(checkbox);
+            verticalGroup.addActor(checkbox);
+        }
+
+        algorithmsGroup.setMaxCheckCount(1);
+        algorithmsGroup.setMinCheckCount(1);
+        algorithmsGroup.setUncheckLast(true);
+        algorithmsGroup.setChecked(algorithmsGroup.getButtons().iterator().next().getName());
+
+        verticalGroup.fill().left().pad(5);
+        table.add(verticalGroup).left();
+        return algorithmsGroup;
+    }
+
+    private CheckBox createLeftAlignedCheckbox(String greedyBestFirst1) {
+        final CheckBox greedyBestFirst = new CheckBox(greedyBestFirst1, SkinHolder.INSTANCE.getAppSkin());
+        greedyBestFirst.setName(greedyBestFirst1);
+        greedyBestFirst.left();
+        return greedyBestFirst;
     }
 
     private Button createMazeGeneratorButton(final MazeRenderer mazeRenderer) {
@@ -137,32 +136,6 @@ public class ControlPanel extends Stage {
             }
         });
         return clearWallsBtn;
-    }
-
-    private Button createFindPathWithAStarButton(final PathRenderer pathRenderer) {
-        final Button findPath = createImageButton("find-path-btn");
-        //todo lambda
-        findPath.addListener(new ClickListener() {
-            @Override
-            public boolean touchDown(final InputEvent event, final float x, final float y, final int pointer, final int button) {
-                pathRenderer.findPathAStar();
-                return true;
-            }
-        });
-        return findPath;
-    }
-
-    private Button createFindPathWithBestFirstButton(final PathRenderer pathRenderer) {
-        final Button findPath = createImageButton("find-path-btn");
-        //todo lambda
-        findPath.addListener(new ClickListener() {
-            @Override
-            public boolean touchDown(final InputEvent event, final float x, final float y, final int pointer, final int button) {
-                pathRenderer.findPathGreedyBestFirst();
-                return true;
-            }
-        });
-        return findPath;
     }
 
     private Button createImageButton(final String buttonTextureName) {

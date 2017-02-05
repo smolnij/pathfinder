@@ -7,9 +7,9 @@ import com.badlogic.gdx.tools.texturepacker.TexturePacker;
 
 public class PathFindingTexturePacker {
 
-    public static final String NON_PACKED_TEXTURES_PATH = "non-packed-textures";
-    public static final String ATLAS_PATH = "atlas";
-    public static final String ATLAS_NAME = "texturepack";
+    private static final String NON_PACKED_TEXTURES_PATH = "non-packed-textures";
+    private static final String ATLAS_PATH = "atlas";
+    private static final String ATLAS_NAME = "texturepack";
 
     public static void packTextures() {
         final TexturePacker.Settings nonTransparentSettings = initTransparentSettings();
@@ -21,7 +21,7 @@ public class PathFindingTexturePacker {
         final TexturePacker.Settings transparentSettings = new TexturePacker.Settings();
         transparentSettings.filterMin = Texture.TextureFilter.Linear;
         transparentSettings.filterMag = Texture.TextureFilter.Linear;
-        transparentSettings.format = Pixmap.Format.RGBA4444;
+        transparentSettings.format = Pixmap.Format.RGBA8888;
         return transparentSettings;
     }
 
