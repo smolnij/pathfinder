@@ -3,10 +3,10 @@ package com.smolnij.research.scene;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.smolnij.research.layout.AtlasHelper;
 import com.smolnij.research.pathfinding.Node;
-import com.smolnij.research.pathfinding.algorithms.AStarPathFinder;
 import com.smolnij.research.pathfinding.algorithms.BestFirstPathFinder;
 import com.smolnij.research.pathfinding.algorithms.PathFinder;
 import com.smolnij.research.pathfinding.algorithms.PathGraphNode;
+import com.smolnij.research.pathfinding.heuristic.ManhattanDistance;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -27,14 +27,14 @@ public class PathRenderer {
         this.end = mazeRenderer.getMaze()[end.x][end.y];
     }
 
-    public void findPathAStar() {
-        pathFinder = new AStarPathFinder();
-        pathFinder.init(start, end, mazeRenderer.getMaze());
+    public void findPath(final PathFinder pathFinder) {
+        this.pathFinder = pathFinder;
+        this.pathFinder.init(start, end, mazeRenderer.getMaze());
         pathFindingStarted = true;
     }
 
     public void findPathGreedyBestFirst() {
-        pathFinder = new BestFirstPathFinder();
+        pathFinder = new BestFirstPathFinder(new ManhattanDistance<>());
         pathFinder.init(start, end, mazeRenderer.getMaze());
         pathFindingStarted = true;
     }

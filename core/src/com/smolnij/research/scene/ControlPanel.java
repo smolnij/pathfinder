@@ -9,6 +9,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.smolnij.research.layout.AtlasHelper;
 import com.smolnij.research.layout.SkinHolder;
+import com.smolnij.research.pathfinding.algorithms.BestFirstPathFinder;
+import com.smolnij.research.pathfinding.heuristic.ManhattanDistance;
 
 public class ControlPanel extends Stage {
 
@@ -32,8 +34,7 @@ public class ControlPanel extends Stage {
         findPath.addListener(new ClickListener() {
             @Override
             public boolean touchDown(final InputEvent event, final float x, final float y, final int pointer, final int button) {
-                System.out.println("chosen: " + algorithmButtonGroup.getChecked().getName());
-                pathRenderer.findPathAStar();
+                pathRenderer.findPath(new BestFirstPathFinder(new ManhattanDistance<>()));
                 return true;
             }
         });

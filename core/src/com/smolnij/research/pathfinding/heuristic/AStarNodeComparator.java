@@ -4,8 +4,7 @@ import com.smolnij.research.pathfinding.GridCoordinatesAware;
 
 import java.util.Comparator;
 
-public class AStarNodeComparator<T extends GridCoordinatesAware>
-        implements Comparator<T> {
+public class AStarNodeComparator<T extends GridCoordinatesAware> implements Comparator<T> {
 
     private final T start;
     private final T goal;
@@ -42,6 +41,14 @@ public class AStarNodeComparator<T extends GridCoordinatesAware>
 
     private int manhattanHeuristic(final T a, final T b) {
         return Math.abs(a.getX() - b.getX()) + Math.abs(a.getY() - b.getY());
+    }
+
+    public double euclidianHeuristic(final T a, final T b) {
+        double x = Math.pow(a.getX() - a.getX(), 2.0);
+        double y = Math.pow(a.getY() - a.getY(), 2.0);
+
+        return Math.sqrt(x + y);
+
     }
 
 }

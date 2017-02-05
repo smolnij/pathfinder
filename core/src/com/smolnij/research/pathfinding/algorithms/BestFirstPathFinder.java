@@ -1,6 +1,7 @@
 package com.smolnij.research.pathfinding.algorithms;
 
 
+import com.badlogic.gdx.ai.pfa.Heuristic;
 import com.smolnij.research.pathfinding.Node;
 import com.smolnij.research.pathfinding.heuristic.GreedyNodeComparator;
 
@@ -14,19 +15,21 @@ public class BestFirstPathFinder extends PathFinder<PathGraphNode> {
     private PriorityQueue<PathGraphNode> open;
     private PathGraphNode[][] mazeGraph;
 
+    public BestFirstPathFinder(final Heuristic<PathGraphNode> heuristic) {
+        super(heuristic);
+    }
+
     @Override
     public void init(final Node start, final Node goal, final Node[][] maze) {
         closed.clear();
         this.mazeGraph = buildGraph(maze);
-
-        open = new PriorityQueue<>(new GreedyNodeComparator<>(goal));
-
         final PathGraphNode startGraphNode = mazeGraph[start.getX()][start.getY()];
-        open.add(startGraphNode);
         this.goal = mazeGraph[goal.getX()][goal.getY()];
         this.start = startGraphNode;
 
 
+        open = new PriorityQueue<>(new GreedyNodeComparator<>(this.goal, getHeuristic()));
+        open.add(startGraphNode);
     }
 
     private PathGraphNode[][] buildGraph(final Node[][] maze) {
@@ -41,16 +44,7 @@ public class BestFirstPathFinder extends PathFinder<PathGraphNode> {
 
     @Override
     public boolean update(final Set<PathGraphNode> nodesToVisualize) {
-        PathGraphNode current = open.poll();
-
-//        double currentEstimate = heuristic(current, goal);
-       /* for (final PathGraphNode node : open) { //don't need loop, since we extracted best?
-            double newEstimate = heuristic(node, goal);
-            if (newEstimate <= currentEstimate) {
-                current = node;
-                currentEstimate = newEstimate;
-            }
-        }*/
+        final PathGraphNode current = open.poll();
         current.setState(NodeState.INSPECTED);
         nodesToVisualize.add(current);
         closed.add(current);

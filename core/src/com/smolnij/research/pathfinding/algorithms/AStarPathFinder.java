@@ -1,6 +1,7 @@
 package com.smolnij.research.pathfinding.algorithms;
 
 
+import com.badlogic.gdx.ai.pfa.Heuristic;
 import com.smolnij.research.pathfinding.Node;
 import com.smolnij.research.pathfinding.heuristic.AStarNodeComparator;
 
@@ -15,19 +16,21 @@ public class AStarPathFinder extends PathFinder<PathGraphNode> {
 
     private PathGraphNode[][] mazeGraph;
 
+    public AStarPathFinder(final Heuristic<PathGraphNode> heuristic) {
+        super(heuristic);
+    }
+
     @Override
     public void init(final Node start, final Node goal, final Node[][] maze) {
         closed.clear();
         this.mazeGraph = buildGraph(maze);
+        this.goal = mazeGraph[goal.getX()][goal.getY()];
+        final PathGraphNode startGraphNode = mazeGraph[start.getX()][start.getY()];
+        this.start = startGraphNode;
 
         open = new PriorityQueue<>(new AStarNodeComparator<>(start, goal));
 
-        final PathGraphNode startGraphNode = mazeGraph[start.getX()][start.getY()];
         open.add(startGraphNode);
-        this.goal = mazeGraph[goal.getX()][goal.getY()];
-        this.start = startGraphNode;
-
-
     }
 
     private PathGraphNode[][] buildGraph(final Node[][] maze) {
