@@ -15,7 +15,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthoCachedTiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.smolnij.research.layout.AtlasHelper;
-import com.smolnij.research.pathfinding.Node;
+import com.smolnij.research.pathfinding.MapNode;
 import com.smolnij.research.scene.ControlPanel;
 import com.smolnij.research.scene.MazeRenderer;
 import com.smolnij.research.scene.PathRenderer;
@@ -53,7 +53,7 @@ public class PathFindingResearchApp extends ApplicationAdapter {
 
         tiledMapRenderer = setUpMapRenderer(map);
 
-        final Node[][] maze = initMaze();
+        final MapNode[][] maze = initMaze();
 
 
         mazeRenderer = new MazeRenderer(batch, mapCamera,
@@ -68,11 +68,11 @@ public class PathFindingResearchApp extends ApplicationAdapter {
 
     }
 
-    private Node[][] initMaze() {
-        final Node[][] maze = new Node[MAP_WIDTH][MAP_HEIGHT];
+    private MapNode[][] initMaze() {
+        final MapNode[][] maze = new MapNode[MAP_WIDTH][MAP_HEIGHT];
         for (int x = 0; x < maze.length; x++) {
             for (int y = 0; y < maze[0].length; y++) {
-                maze[x][y] = new Node(x, y, false);
+                maze[x][y] = new MapNode(x, y, false);
             }
         }
         return maze;

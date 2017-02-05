@@ -10,7 +10,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.smolnij.research.layout.AtlasHelper;
 import com.smolnij.research.maze.MazeGenerator;
-import com.smolnij.research.pathfinding.Node;
+import com.smolnij.research.pathfinding.MapNode;
 
 import static com.smolnij.research.PathFindingResearchApp.PANEL_HEIGHT;
 import static com.smolnij.research.PathFindingResearchApp.VIRTUAL_HEIGHT;
@@ -29,7 +29,7 @@ public class MazeRenderer implements InputProcessor {
     private final TiledMapPoint startPoint;
     private final TiledMapPoint targetPoint;
     private Vector2 lastTouchPoint = new Vector2(-1, -1);
-    private Node[][] maze;
+    private MapNode[][] maze;
     private boolean dragging;
     private boolean removeWall;
     private MazeGenerator mazeGenerator;
@@ -38,7 +38,7 @@ public class MazeRenderer implements InputProcessor {
 
     public MazeRenderer(final SpriteBatch batch, final OrthographicCamera camera,
                         final TiledMapPoint startPoint,
-                        final TiledMapPoint targetPoint, final Node[][] maze) {
+                        final TiledMapPoint targetPoint, final MapNode[][] maze) {
         this.batch = batch;
         this.camera = camera;
         this.startPoint = startPoint;
@@ -71,7 +71,7 @@ public class MazeRenderer implements InputProcessor {
     private void drawMaze() {
         for (int i = 0; i < maze.length; i++) {
             for (int j = 0; j < maze[0].length; j++) {
-                final Node node = maze[i][j];
+                final MapNode node = maze[i][j];
                 if (node.isBlocked()) {
                     batch.draw(AtlasHelper.INSTANCE.getWallTexture(), i, j, 1, 1);
                 }
@@ -79,11 +79,11 @@ public class MazeRenderer implements InputProcessor {
         }
     }
 
-    private void setWalls(final Node[][] maze) {
+    private void setWalls(final MapNode[][] maze) {
         this.maze = maze;
     }
 
-    public Node[][] getMaze() {
+    public MapNode[][] getMaze() {
         return maze;
     }
 
@@ -95,7 +95,7 @@ public class MazeRenderer implements InputProcessor {
     public void clearWalls() {
         for (int i = 0; i < maze.length; i++) {
             for (int j = 0; j < maze[0].length; j++) {
-                maze[i][j] = new Node(i, j, false);
+                maze[i][j] = new MapNode(i, j, false);
             }
         }
     }
@@ -114,7 +114,7 @@ public class MazeRenderer implements InputProcessor {
         if (beyondMazeBoundaries(x, y)) {
             return;
         }
-        maze[x][y] = new Node(x, y, !removeWall);
+        maze[x][y] = new MapNode(x, y, !removeWall);
         lastTouchPoint.x = x;
         lastTouchPoint.y = y;
     }
@@ -154,7 +154,7 @@ public class MazeRenderer implements InputProcessor {
             return false;
         }
 
-        final Node currentCell = maze[(int) touchPoint.x][(int) touchPoint.y];
+        final MapNode currentCell = maze[(int) touchPoint.x][(int) touchPoint.y];
         removeWall = currentCell.isBlocked();
         editWallSegment(touchPoint);
         dragging = true;

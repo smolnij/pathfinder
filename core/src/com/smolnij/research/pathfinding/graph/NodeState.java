@@ -1,4 +1,4 @@
-package com.smolnij.research.pathfinding.algorithms;
+package com.smolnij.research.pathfinding.graph;
 
 public enum NodeState {
     INSPECTED, INSPECTED_CANDIDATE, PATH

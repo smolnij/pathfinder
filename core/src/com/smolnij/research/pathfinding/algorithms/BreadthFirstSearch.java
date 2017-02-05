@@ -1,7 +1,7 @@
 package com.smolnij.research.pathfinding.algorithms;
 
 
-import com.smolnij.research.pathfinding.Node;
+import com.smolnij.research.pathfinding.MapNode;
 
 import java.util.Set;
 
@@ -12,7 +12,7 @@ public class BreadthFirstSearch extends PathFinder {
     }
 
     @Override
-    public void init(Node start, Node goal, Node[][] graph) {
+    public void init(MapNode start, MapNode goal, MapNode[][] graph) {
 
     }
 

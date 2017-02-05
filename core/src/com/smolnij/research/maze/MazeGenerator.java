@@ -1,6 +1,6 @@
 package com.smolnij.research.maze;
 
-import com.smolnij.research.pathfinding.Node;
+import com.smolnij.research.pathfinding.MapNode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +11,7 @@ public class MazeGenerator {
     private MazeCell[][] cells;
     private final int gridDimensionX, gridDimensionY;
     private final int mazeStepX, mazeStepY;
-    private final Node[][] grid;
+    private final MapNode[][] grid;
 
     public MazeGenerator(final int width, final int height) {
         this.mazeStepX = (width - 1) / 4;
@@ -20,7 +20,7 @@ public class MazeGenerator {
         gridDimensionX = width;
         gridDimensionY = height;
 
-        grid = new Node[gridDimensionX][gridDimensionY];
+        grid = new MapNode[gridDimensionX][gridDimensionY];
     }
 
     private void init() {
@@ -87,21 +87,21 @@ public class MazeGenerator {
         return cells[x][y];
     }
 
-    public Node[][] getGrid() {
+    public MapNode[][] getGrid() {
         return grid;
     }
 
     private void updateGrid() {
         for (int x = 0; x < gridDimensionX; x++) {
             for (int y = 0; y < gridDimensionY; y++) {
-                grid[x][y] = new Node(x, y, false);
+                grid[x][y] = new MapNode(x, y, false);
             }
         }
 
         for (int x = 0; x < gridDimensionX; x++) {
             for (int y = 0; y < gridDimensionY; y++) {
                 if (x % 4 == 0 || y % 2 == 0)
-                    grid[x][y] = new Node(x, y, true);
+                    grid[x][y] = new MapNode(x, y, true);
             }
         }
 
@@ -110,16 +110,16 @@ public class MazeGenerator {
                 MazeCell current = getCell(x, y);
                 int gridX = x * 4 + 2, gridY = y * 2 + 1;
 
-                grid[gridX][gridY] = new Node(gridX, gridY, false);
+                grid[gridX][gridY] = new MapNode(gridX, gridY, false);
                 if (current.isCellBelowNeighbor()) {
-                    grid[gridX][gridY + 1] = new Node(gridX, gridY + 1, false);
-                    grid[gridX + 1][gridY + 1] = new Node(gridX + 1, gridY + 1, false);
-                    grid[gridX - 1][gridY + 1] = new Node(gridX - 1, gridY + 1, false);
+                    grid[gridX][gridY + 1] = new MapNode(gridX, gridY + 1, false);
+                    grid[gridX + 1][gridY + 1] = new MapNode(gridX + 1, gridY + 1, false);
+                    grid[gridX - 1][gridY + 1] = new MapNode(gridX - 1, gridY + 1, false);
                 }
                 if (current.isCellRightNeighbor()) {
-                    grid[gridX + 2][gridY] = new Node(gridX + 2, gridY, false);
-                    grid[gridX + 1][gridY] = new Node(gridX + 1, gridY, false);
-                    grid[gridX + 3][gridY] = new Node(gridX + 3, gridY, false);
+                    grid[gridX + 2][gridY] = new MapNode(gridX + 2, gridY, false);
+                    grid[gridX + 1][gridY] = new MapNode(gridX + 1, gridY, false);
+                    grid[gridX + 3][gridY] = new MapNode(gridX + 3, gridY, false);
                 }
             }
         }

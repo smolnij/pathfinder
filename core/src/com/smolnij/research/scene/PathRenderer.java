@@ -2,10 +2,10 @@ package com.smolnij.research.scene;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.smolnij.research.layout.AtlasHelper;
-import com.smolnij.research.pathfinding.Node;
+import com.smolnij.research.pathfinding.MapNode;
 import com.smolnij.research.pathfinding.algorithms.BestFirstPathFinder;
 import com.smolnij.research.pathfinding.algorithms.PathFinder;
-import com.smolnij.research.pathfinding.algorithms.PathGraphNode;
+import com.smolnij.research.pathfinding.graph.StatefulGraphMapNode;
 import com.smolnij.research.pathfinding.heuristic.ManhattanDistance;
 
 import java.util.HashSet;
@@ -13,10 +13,10 @@ import java.util.Set;
 
 public class PathRenderer {
     private static final int PATH_RENDERING_REFRESH_RATE = 1;
-    private Set<PathGraphNode> progress = new HashSet<>();
+    private Set<StatefulGraphMapNode> progress = new HashSet<>();
 
-    private final Node start;
-    private final Node end;
+    private final MapNode start;
+    private final MapNode end;
     private boolean pathFindingStarted = false;
     private final MazeRenderer mazeRenderer;
     private PathFinder pathFinder;
@@ -51,7 +51,7 @@ public class PathRenderer {
         }
 
         batch.begin();
-        for (final PathGraphNode node : progress) {
+        for (final StatefulGraphMapNode node : progress) {
             if (node.getState() != null) {
                 batch.draw(AtlasHelper.INSTANCE.findRegion(node.getState().name().toLowerCase()), node.getX(),
                         node.getY(), 1, 1);
