@@ -13,12 +13,12 @@ public class AStarPathFinder extends PathFinder {
 
     public static final String NAME = "A*";
 
-    public AStarPathFinder(Heuristic<StatefulGraphMapNode> heuristic) {
+    public AStarPathFinder(final Heuristic<StatefulGraphMapNode> heuristic) {
         super(heuristic);
     }
 
     @Override
-    public Queue<StatefulGraphMapNode> getToBeEvaluatedQueueImplementation(MapNode start, MapNode goal) {
-        return new PriorityQueue<>(new AStarNodeComparator<>(start, goal));
+    public Queue<StatefulGraphMapNode> getToBeEvaluatedQueueImplementation(final MapNode start, final MapNode goal) {
+        return new PriorityQueue<>(new AStarNodeComparator<>(this.start, this.goal, getHeuristic()));
     }
 }

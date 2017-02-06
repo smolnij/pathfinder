@@ -2,7 +2,9 @@ package com.smolnij.research.pathfinding.algorithms;
 
 import com.badlogic.gdx.ai.pfa.Heuristic;
 import com.smolnij.research.pathfinding.graph.StatefulGraphMapNode;
-import com.smolnij.research.pathfinding.heuristic.ManhattanDistance;
+import com.smolnij.research.pathfinding.heuristic.ChebyshevHeuristic;
+import com.smolnij.research.pathfinding.heuristic.EuclidianHeuristic;
+import com.smolnij.research.pathfinding.heuristic.ManhattanHeuristic;
 
 public enum ImplementedHeuristics {
 
@@ -21,11 +23,11 @@ public enum ImplementedHeuristics {
     public static Heuristic<StatefulGraphMapNode> createInstanceByName(final String heuristicName) {
         switch (heuristicName) {
             case Names.MANHATTAN_NAME:
-                return new ManhattanDistance<>();
+                return new ManhattanHeuristic<>();
             case Names.CHEBYSHEV_NAME:
-                return new ManhattanDistance<>();
+                return new ChebyshevHeuristic<>();
             case Names.EUCLIDIAN_NAME:
-                return new ManhattanDistance<>();
+                return new EuclidianHeuristic<>();
             default:
                 throw new IllegalArgumentException("Unknown heuristic: " + heuristicName);
         }
