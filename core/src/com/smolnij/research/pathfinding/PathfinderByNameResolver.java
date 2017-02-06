@@ -6,7 +6,7 @@ import com.smolnij.research.pathfinding.graph.StatefulGraphMapNode;
 
 public class PathfinderByNameResolver {
 
-    public static PathFinder<StatefulGraphMapNode> getPathFinderByName(final String pathfinderName, final String heuristicName) {
+    public static PathFinder getPathFinderByName(final String pathfinderName, final String heuristicName) {
         final Heuristic<StatefulGraphMapNode> heuristic = ImplementedHeuristics.createInstanceByName(heuristicName);
         switch (pathfinderName) {
             case AStarPathFinder.NAME:
@@ -14,11 +14,10 @@ public class PathfinderByNameResolver {
             case BestFirstPathFinder.NAME:
                 return new BestFirstPathFinder(heuristic);
             case BreadthFirstPathFinder.NAME:
-                return new BreadthFirstPathFinder();
+                return new BreadthFirstPathFinder(null);
             default:
                 throw new IllegalArgumentException("Algorithm " + pathfinderName + " not implemented");
 
         }
     }
-
 }

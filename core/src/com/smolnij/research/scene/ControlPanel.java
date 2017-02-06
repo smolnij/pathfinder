@@ -10,7 +10,6 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.smolnij.research.layout.AtlasHelper;
 import com.smolnij.research.layout.SkinHolder;
 import com.smolnij.research.pathfinding.algorithms.*;
-import com.smolnij.research.pathfinding.graph.StatefulGraphMapNode;
 
 import java.util.Arrays;
 
@@ -31,7 +30,7 @@ public class ControlPanel extends Stage {
         findPath.addListener(new ClickListener() {
             @Override
             public boolean touchDown(final InputEvent event, final float x, final float y, final int pointer, final int button) {
-                PathFinder<StatefulGraphMapNode> pathFinder = getPathFinderByName(algorithmButtonGroup.getChecked().getName(),
+                final PathFinder pathFinder = getPathFinderByName(algorithmButtonGroup.getChecked().getName(),
                         heuristicButtonGroup.getChecked().getName());
                 pathRenderer.findPath(pathFinder);
                 return true;
