@@ -59,7 +59,8 @@ public class PathFindingResearchApp extends ApplicationAdapter {
         mazeRenderer = new MazeRenderer(batch, mapCamera,
                 new TiledMapPoint(START_X, START_Y), new TiledMapPoint(TARGET_X, TARGET_Y), maze);
 
-        pathRenderer = new PathRenderer(mazeRenderer, new TiledMapPoint(START_X, START_Y), new TiledMapPoint(TARGET_X, TARGET_Y));
+        pathRenderer = new PathRenderer(mazeRenderer, mapCamera, new TiledMapPoint(START_X, START_Y),
+                new TiledMapPoint(TARGET_X, TARGET_Y));
 
         controlPanel = new ControlPanel(new FitViewport(Gdx.graphics.getWidth(), VIRTUAL_HEIGHT + PANEL_HEIGHT), batch,
                 mazeRenderer, pathRenderer);
@@ -120,8 +121,8 @@ public class PathFindingResearchApp extends ApplicationAdapter {
         tiledMapRenderer.render();
 
         batch.enableBlending();
-        mazeRenderer.render();
         pathRenderer.render(batch);
+        mazeRenderer.render();
         controlPanel.getViewport().apply();
         controlPanel.act();
         controlPanel.draw();
