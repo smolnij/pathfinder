@@ -35,7 +35,7 @@ If h(n) is always zero, then only g(n) is considered, which turns A\* so Dijkstr
 Heuristic term itself means good enough solution for immideiate goal. The Heuristic in pathfinding context selects the closest node to goal and there are many ways of how to determine which one is closer.
 Heuristic is a problem specific, so should be chosen according to your particular case.
 
-Although you can provide any evaluation function to the algorithm, the reasonable heuristic should consider graph configuration, e.g. on a square grid that allows 4 directions of movement, use Manhattan distance, but for graph with allowed diagonal moves it is better to use of course heuristic which is able to calculate diagonal movement cost, like Euclidian.
+Although you can pass any evaluation function to the algorithm, the reasonable heuristic should consider graph configuration, e.g. on a square grid that allows 4 directions of movement, use Manhattan distance, but for graph with allowed diagonal moves it is better to use of course heuristic which is able to calculate diagonal movement cost, like Euclidian.
 
 
 ### Manhattan
