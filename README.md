@@ -9,11 +9,11 @@ Try out different algorithms to see how it works.
 ## Algorithms
 If one take a look at the current implementation of algorithms, one can clearly see how similar they are.
 
-Going purely Java, in fact, the only difference between Breadth First Search, Greedy Best First and A\* in current implementation is a data structure which holds nodes-candidates for the next expansion step. And passing h(n) Heuristic strategy (strategy pattern used to get different heuristics) to A\* which always returns 0 turns A\* into Dijkstra's algorithm, so even data structure modification is not needed.
+Going purely Java, in fact, the only difference between Breadth First Search, Greedy Best First and A\* in current implementation is a *data structure* which holds nodes-candidates for the next expansion step. And passing h(n) Heuristic strategy (strategy pattern used to get different heuristics) to A\* which always returns 0 turns A\* into Dijkstra's algorithm, so even data structure modification is not needed.
 
-Initial algorithms description of course knows nothing about Java data structures, but speaking architecture-wise it is a data-structure responsibility to know which nodes are neighbors of the given one. And we also can use nice and clean approach of automatic by-comparator sort in Java, so we just get the best node from the Queue without looking for the best ourselves. Speaking about high performance computing, consider better structures (like TreeNode) for such tasks.
+Initial algorithms description of course knows nothing about Java data structures, ** but speaking architecture-wise it is a data-structure responsibility to know which nodes are neighbors of the given one.** And we also can use nice and clean approach of automatic by-comparator sort in Java, so we just get the best node from the Queue without looking for the best ourselves. **Speaking about high performance computing, consider better structures (like TreeNode) for such tasks.**
 
-Generally speaking about the algorithms and perfomance, - as of my experience in any kind of data, - you should consider the data set size when choosing the right algorithm. The more instructions in the algorithm - the more complex it itself, 
+** Generally speaking about the algorithms and perfomance, - as of my experience in any kind of data, - you should consider the data set size when choosing the right algorithm. The more instructions in the algorithm - the more complex it itself. If algorithm spends some time in evaluation part trying to find most optimal solution, than gains would be visible only on a big datasets. Good idea also analyze the dataset itself before choosing an algorithm, you may be suprised, but bubble sort is much faster than a quicksort in certain datasets. **
 
 
 ### Breadth First Search
@@ -24,7 +24,7 @@ Is one of the Best First algorithms, but uses "greedy" approach to find path. In
 
 ### A*
 Is another Best First algorithm, very popular in gamedev because it is very flexible and applicable in many cases.
-It consider exact cost of the path, so the path found is guaranteed to be shortest (i.e. cheapeset according to your heuristic functions).
+It consider exact cost of the path, so the path found is guaranteed to be shortest (i.e. *cheapest* according to your heuristic functions).
 The A\* selects the path based on sum of two functions, - so called g(n), and h(n): f(n)=g(n)+h(n).
 Where n is the last node on the path, g(n) is the cost of the path from the start node to n, and h(n) is a heuristic that estimates the cost of the cheapest path from n to the goal.
 If h(n) is always zero, then only g(n) is considered, which turns A\* so Dijkstra's algorithm.
