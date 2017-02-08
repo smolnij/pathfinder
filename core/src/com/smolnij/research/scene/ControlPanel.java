@@ -73,7 +73,7 @@ public class ControlPanel extends Stage {
     }
 
     private ButtonGroup<Button> addAlgorithmButtons(final Table table) {
-        return addRadioOptionsToTable(table, BreadthFirstPathFinder.NAME, BestFirstPathFinder.NAME, AStarPathFinder.NAME);
+        return addRadioOptionsToTable(table, AStarPathFinder.NAME, BreadthFirstPathFinder.NAME, BestFirstPathFinder.NAME);
     }
 
     private ButtonGroup<Button> addRadioOptionsToTable(final Table table, final String... options) {
