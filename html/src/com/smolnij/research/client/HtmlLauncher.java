@@ -9,8 +9,11 @@ public class HtmlLauncher extends GwtApplication {
 
         @Override
         public GwtApplicationConfiguration getConfig () {
-                return new GwtApplicationConfiguration(PathFindingResearchApp.VIRTUAL_WIDTH,
+                final GwtApplicationConfiguration config = new GwtApplicationConfiguration(PathFindingResearchApp.VIRTUAL_WIDTH,
                         PathFindingResearchApp.VIRTUAL_HEIGHT + PathFindingResearchApp.PANEL_HEIGHT);
+
+                config.preferFlash = false;
+                return config;
         }
 
         @Override
