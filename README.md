@@ -2,7 +2,7 @@
 
 A short example of path finding algorithms implemented in java.
 
-**You can try it live here: [link](pathfinder-smolnij.rhcloud.com) **
+** You can try it live here: [link](http://pathfinder-smolnij.rhcloud.com) **
 
 Try out different algorithms to see how it works.
 
