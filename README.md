@@ -2,14 +2,14 @@
 
 A short example of path finding algorithms implemented in java.
 
-** You can try it live here: [link](http://pathfinder-smolnij.rhcloud.com) **
+**You can try it live here: [link](http://pathfinder-smolnij.rhcloud.com)**
 
 Try out different algorithms to see how it works.
 
 ## Algorithms
 If one take a look at the current implementation of algorithms, one can clearly see how similar they are.
 
-Going purely Java, in fact, the only difference between Breadth First Search, Greedy Best First and A\* in current implementation is a *data structure* which holds nodes-candidates for the next expansion step. And passing h(n) Heuristic strategy (strategy pattern used to get different heuristics) to A\* which always returns 0 turns A\* into Dijkstra's algorithm, so even data structure modification is not needed.
+Going purely Java, in fact, the only difference between Breadth First Search, Greedy Best First and A\* in current implementation is a *data structure and comparator* which holds nodes-candidates for the next expansion step. And passing h(n) Heuristic strategy (strategy pattern used to get different heuristics) to A\* which always returns 0 turns A\* into Dijkstra's algorithm, so even data structure modification is not needed.
 
 Initial algorithms description of course knows nothing about Java data structures, **but speaking architecture-wise it is a data-structure responsibility to know which nodes are neighbors of the given one.** And we also can use nice and clean approach of automatic by-comparator sort in Java, so we just get the best node from the Queue without looking for the best ourselves. **Speaking about high performance computing, consider better structures (like TreeNode) for such tasks.**
 
